@@ -3,6 +3,7 @@
 #include "../manager/map.h"
 #include "../manager/object.h"
 #include "../manager/tile.h"
+#include "../manager/player.h"
 #include <raylib.h>
 
 //------------------------------------------------------------------------------------
@@ -11,6 +12,7 @@
 static void drawObject(const Object_t *const obj);
 static void drawMap(const Map_t *const map);
 static void drawTile(const Tile_t *const tile);
+static void drawPlayer(const Player_t *const player);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -34,6 +36,9 @@ static void drawObject(const Object_t *const obj) {
         case OBJ_MAP:
             drawMap((Map_t *)obj->obj);
             break;
+        case OBJ_PLAYER:
+            drawPlayer((Player_t *)obj->obj);
+            break;
     }
 }
 static void drawMap(const Map_t *const map) {
@@ -55,3 +60,13 @@ static void drawTile(const Tile_t *const tile) {
         tile->color
     );
 }
+static void drawPlayer(const Player_t *const player) {
+    DrawRectangle(
+        player->position.x,
+        player->position.y,
+        6,
+        6,
+        RAYWHITE
+    );
+}
+

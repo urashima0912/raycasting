@@ -4,7 +4,8 @@
 #define NUM_OBJECTS 2
 
 typedef enum ObjectType_t{
-    OBJ_MAP = 0
+    OBJ_MAP = 0,
+    OBJ_PLAYER
 }ObjectType_t;
 
 typedef struct Object_t {
