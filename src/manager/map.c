@@ -1,7 +1,9 @@
 #include "map.h"
-
 #include <stdlib.h>
 
+//------------------------------------------------------------------------------------
+// Constants declaration.
+//------------------------------------------------------------------------------------
 const uint8_t level0[L0_ROW][L0_COLUMN] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -16,12 +18,12 @@ const uint8_t level0[L0_ROW][L0_COLUMN] = {
 };
 
 //------------------------------------------------------------------------------------
-// Declaration statics methods.
+// Private methods declaration.
 //------------------------------------------------------------------------------------
 static Tile_t **loadTiles(LevelType_t levelType, Vector2 size);
 
 //------------------------------------------------------------------------------------
-// Implementation public methods.
+// Public methods implementation.
 //------------------------------------------------------------------------------------
 Map_t *initMap(LevelType_t levelType) {
     Map_t *map = malloc(sizeof(Map_t));
@@ -30,25 +32,23 @@ Map_t *initMap(LevelType_t levelType) {
     map->tiles = loadTiles(levelType, map->size);
     return map;
 }
-
-void freeMap(Map_t **map) {
-    if (*map != NULL) {
-        if ((*map)->tiles) {
-            for (int row=0; row < (*map)->size.y; ++row) {
-                free((*map)->tiles[row]);
-                (*map)->tiles[row] = NULL;
+void freeMap(Map_t **ptrMap) {
+    if (*ptrMap != NULL) {
+        if ((*ptrMap)->tiles) {
+            for (int row=0; row < (*ptrMap)->size.y; ++row) {
+                free((*ptrMap)->tiles[row]);
+                (*ptrMap)->tiles[row] = NULL;
             }
-            free((*map)->tiles);
-            (*map)->tiles = NULL;
+            free((*ptrMap)->tiles);
+            (*ptrMap)->tiles = NULL;
         }
-        free((*map));
-        (*map) = NULL;
+        free((*ptrMap));
+        (*ptrMap) = NULL;
     }
 }
 
-
 //------------------------------------------------------------------------------------
-// Implementation static methods.
+// Private methods implementation.
 //------------------------------------------------------------------------------------
 static Tile_t **loadTiles(LevelType_t levelType, Vector2 size) {
     Tile_t **tiles = NULL;

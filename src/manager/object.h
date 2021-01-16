@@ -1,7 +1,7 @@
 #ifndef RC_OBJECT_H
 #define RC_OBJECT_H
 
-#define NUM_OBJECTS 1
+#define NUM_OBJECTS 2
 
 typedef enum ObjectType_t{
     OBJ_MAP = 0

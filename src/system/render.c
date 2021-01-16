@@ -5,15 +5,20 @@
 #include "../manager/tile.h"
 #include <raylib.h>
 
+//------------------------------------------------------------------------------------
+// Private methods declaration.
+//------------------------------------------------------------------------------------
 static void drawObject(const Object_t *const obj);
 static void drawMap(const Map_t *const map);
 static void drawTile(const Tile_t *const tile);
 
+//------------------------------------------------------------------------------------
+// Public methods declaration.
+//------------------------------------------------------------------------------------
 void initRender(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
     SetTargetFPS(SCREEN_FPS);
 }
-
 void updateRender(void) {
     BeginDrawing();
     ClearBackground(BLACK);
@@ -21,6 +26,9 @@ void updateRender(void) {
     EndDrawing();
 }
 
+//------------------------------------------------------------------------------------
+// Private methods implementation.
+//------------------------------------------------------------------------------------
 static void drawObject(const Object_t *const obj) {
     switch (obj->type) {
         case OBJ_MAP:
@@ -28,7 +36,6 @@ static void drawObject(const Object_t *const obj) {
             break;
     }
 }
-
 static void drawMap(const Map_t *const map) {
     const int nRow = map->size.y;
     const int nColumn = map->size.x;
@@ -39,7 +46,6 @@ static void drawMap(const Map_t *const map) {
         }
     }
 }
-
 static void drawTile(const Tile_t *const tile) {
     DrawRectangle(
         tile->position.x,
