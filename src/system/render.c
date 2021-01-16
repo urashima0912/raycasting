@@ -19,6 +19,7 @@ static void drawPlayer(const Player_t *const player);
 //------------------------------------------------------------------------------------
 void initRender(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
+    HideCursor();
     SetTargetFPS(SCREEN_FPS);
 }
 void updateRender(void) {

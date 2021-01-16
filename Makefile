@@ -382,6 +382,8 @@ endif
 # Define all source files required
 PROJECT_SOURCE_FILES ?= main.c                          \
                         src/system/render.c             \
+                        src/system/event.c              \
+                        src/system/physic.c             \
                         src/manager/map.c               \
                         src/manager/tile.c              \
                         src/manager/object.c            \

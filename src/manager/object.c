@@ -15,6 +15,10 @@ void initStoreObject(void) {
     storeObject[1].type = OBJ_PLAYER;
     storeObject[1].obj = (Player_t *)initPlayer(playerPos);
 }
+void updateAllObject(void (*funcPtr)(Object_t *const)) {
+    for (int i=0; i < NUM_OBJECTS; ++i)
+        funcPtr(&storeObject[i]);
+}
 void drawAllObject(void (*funcPrt)(const Object_t *const)) {
     for (int i=0; i < NUM_OBJECTS; ++i)
         funcPrt(&storeObject[i]);

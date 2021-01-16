@@ -16,7 +16,8 @@ typedef struct Object_t {
 Object_t storeObject[NUM_OBJECTS];
 
 void initStoreObject(void);
-void drawAllObject(void (*funcPrt)(const Object_t *const));
+void updateAllObject(void (* funcPtr)(Object_t *const));
+void drawAllObject(void (* funcPrt)(const Object_t *const));
 void freeStoreObject(void);
 
 #endif //RC_OBJECT_H
