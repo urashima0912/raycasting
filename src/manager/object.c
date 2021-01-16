@@ -11,5 +11,5 @@ void drawAllObject(void (*funcPrt)(const Object_t *const)) {
 }
 
 void freeStoreObject(void) {
-    freeMap((Map_t *)storeObject[0].obj);
+    freeMap((Map_t **)&storeObject[0].obj);
 }

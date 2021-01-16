@@ -19,6 +19,6 @@ typedef struct Map_t {
 }Map_t;
 
 Map_t   *initMap(LevelType_t levelType);
-void    freeMap(Map_t *map);
+void    freeMap(Map_t **map);
 
 #endif //RC_MAP_H

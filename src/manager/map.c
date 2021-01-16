@@ -31,14 +31,18 @@ Map_t *initMap(LevelType_t levelType) {
     return map;
 }
 
-void freeMap(Map_t *map) {
-    if (map->tiles) {
-        for (int row=0; row < map->size.y; ++row) {
-            free(map->tiles[row]);
-            map->tiles[row] = NULL;
+void freeMap(Map_t **map) {
+    if (*map != NULL) {
+        if ((*map)->tiles) {
+            for (int row=0; row < (*map)->size.y; ++row) {
+                free((*map)->tiles[row]);
+                (*map)->tiles[row] = NULL;
+            }
+            free((*map)->tiles);
+            (*map)->tiles = NULL;
         }
-        free(map->tiles);
-        map->tiles = NULL;
+        free((*map));
+        (*map) = NULL;
     }
 }
 
