@@ -19,6 +19,7 @@ typedef struct Map_t {
 }Map_t;
 
 Map_t   *initMap(LevelType_t levelType);
+bool    isCollisionMap(const Map_t *const map, Vector2 position);
 void    freeMap(Map_t **ptrMap);
 
 #endif //RC_MAP_H

@@ -426,6 +426,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
 		find . -type f -executable -delete
 		rm -fv *.o
+		rm -fv src/*.o
 		rm -fv src/system/*.o
 		rm -fv src/manager/*.o
     endif

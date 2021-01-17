@@ -2,16 +2,18 @@
 #include "../global.h"
 #include "../manager/player.h"
 #include "../manager/object.h"
+#include "../manager/map.h"
 #include <raylib.h>
 #include <raymath.h>
+#include <stdint.h>
 
 //------------------------------------------------------------------------------------
 // Private method declaration.
 //------------------------------------------------------------------------------------
 static void updateObject(Object_t *const obj);
 static void updatePlayerPhysic(Player_t *player);
-// all shapes.
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB);
+static bool isCollisonVectorMapPhysic(Vector2 position);
 //------------------------------------------------------------------------------------
 // Public method implementation.
 //------------------------------------------------------------------------------------
@@ -39,6 +41,7 @@ static void updatePlayerPhysic(Player_t *player) {
     const Vector2 direction = (Vector2){ angleCos, angleSin };
 
     Vector2 newPosition = player->position;
+
     newPosition.x += direction.x * player->velocity.y;
     newPosition.y += direction.y * player->velocity.y;
 
@@ -46,10 +49,16 @@ static void updatePlayerPhysic(Player_t *player) {
     Vector2 ptoB = addVectorGlobal(player->position, auxVec);
 
     updateLineShapePhysic(line, player->position, ptoB);
-    player->position = newPosition;
+    if (!isCollisonVectorMapPhysic(newPosition))
+        player->position = newPosition;
+
     player->angle = angle;
 }
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB) {
     line->ptoA = addVectorGlobal(ptoA, (Vector2){ 3, 3});
     line->ptoB = addVectorGlobal(ptoB, (Vector2){ 3, 3});
+}
+static bool isCollisonVectorMapPhysic(Vector2 position) {
+    const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
+    return isCollisionMap(map, position);
 }

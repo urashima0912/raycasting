@@ -32,6 +32,15 @@ Map_t *initMap(LevelType_t levelType) {
     map->tiles = loadTiles(levelType, map->size);
     return map;
 }
+bool isCollisionMap(const Map_t *const map, Vector2 position) {
+    const float tileWidth =  map->tiles[0]->size.x;
+    const float tileHeight =  map->tiles[0]->size.y;
+
+    const int posX = position.x / tileWidth;
+    const int posY = position.y / tileHeight;
+
+    return level0[posY][posX] != TILE_FLOOR;
+}
 void freeMap(Map_t **ptrMap) {
     if (*ptrMap != NULL) {
         if ((*ptrMap)->tiles) {
