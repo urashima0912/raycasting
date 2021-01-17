@@ -69,5 +69,11 @@ static void drawPlayer(const Player_t *const player) {
         6,
         RAYWHITE
     );
+
+    DrawLineV(
+        player->rayLine.ptoA,
+        player->rayLine.ptoB,
+        player->rayLine.color
+    );
 }
 

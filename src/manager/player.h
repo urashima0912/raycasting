@@ -3,12 +3,14 @@
 
 #include <raylib.h>
 #include <stdint.h>
+#include "shape.h"
 
 typedef struct Player_t {
     Vector2 position;
     Vector2 velocity;
     float   angle;
     float   angleVel;
+    Line_t  rayLine;
 } Player_t;
 
 Player_t    *initPlayer(Vector2 position);

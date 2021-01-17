@@ -381,6 +381,7 @@ endif
 
 # Define all source files required
 PROJECT_SOURCE_FILES ?= main.c                          \
+                        src/global.c                    \
                         src/system/render.c             \
                         src/system/event.c              \
                         src/system/physic.c             \
@@ -388,6 +389,7 @@ PROJECT_SOURCE_FILES ?= main.c                          \
                         src/manager/tile.c              \
                         src/manager/object.c            \
                         src/manager/player.c            \
+                        src/manager/shape.c             \
 
 # Define all object files from source files
 OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
