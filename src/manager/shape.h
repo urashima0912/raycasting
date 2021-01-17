@@ -3,12 +3,23 @@
 
 #include <raylib.h>
 
+typedef enum ShapeType_t {
+    SHAPE_LINE = 0
+}ShapeType_t;
+
 typedef struct Line_t {
     Vector2 ptoA;
     Vector2 ptoB;
+    float   mod;
     Color   color;
 }Line_t;
 
-Line_t initLineShape(Vector2 ptoA, Vector2 ptoB, Color color);
+typedef struct Shape_t {
+    ShapeType_t type;
+    void *ptr;
+} Shape_t;
+
+Shape_t initShape(ShapeType_t type);
+void    freeShape(Shape_t *ptrShape);
 
 #endif //RC_SHAPE_H

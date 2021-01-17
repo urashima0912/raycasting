@@ -1,19 +1,19 @@
 #include "object.h"
 #include "map.h"
 #include "player.h"
+#include "shape.h"
 
 //------------------------------------------------------------------------------------
 // Public method implementation.
 //------------------------------------------------------------------------------------
 void initStoreObject(void) {
     // Load map.
-    storeObject[0].type = OBJ_MAP;
-    storeObject[0].obj = (Map_t *)initMap(LEVEL_0);
-
+    storeObject[OBJ_MAP].type = OBJ_MAP;
+    storeObject[OBJ_MAP].obj = (Map_t *)initMap(LEVEL_0);
     // Load Player.
     const Vector2 playerPos = (Vector2){200, 100};
-    storeObject[1].type = OBJ_PLAYER;
-    storeObject[1].obj = (Player_t *)initPlayer(playerPos);
+    storeObject[OBJ_PLAYER].type = OBJ_PLAYER;
+    storeObject[OBJ_PLAYER].obj = (Player_t *)initPlayer(playerPos);
 }
 void updateAllObject(void (*funcPtr)(Object_t *const)) {
     for (int i=0; i < NUM_OBJECTS; ++i)

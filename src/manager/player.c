@@ -7,13 +7,12 @@
 Player_t *initPlayer(Vector2 position) {
     Player_t *player = malloc(sizeof(Player_t));
     player->position = position;
-    player->rayLine.ptoA = position;
-    player->rayLine.ptoB = (Vector2){0};
-    player->rayLine.color = RED;
+    player->shapeLine = initShape(SHAPE_LINE);
     return player;
 }
 void freePlayer(Player_t ** ptrPlayer) {
     if (ptrPlayer) {
+        freeShape(&(*ptrPlayer)->shapeLine);
         free(*ptrPlayer);
         *ptrPlayer = NULL;
     }

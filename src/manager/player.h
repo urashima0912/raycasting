@@ -10,7 +10,7 @@ typedef struct Player_t {
     Vector2 velocity;
     float   angle;
     float   angleVel;
-    Line_t  rayLine;
+    Shape_t shapeLine;
 } Player_t;
 
 Player_t    *initPlayer(Vector2 position);

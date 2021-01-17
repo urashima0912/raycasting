@@ -4,7 +4,10 @@
 #include <raylib.h>
 #include <stdint.h>
 
-float lengthVectorGlobal(Vector2 vector);
-Vector2 normalizedVectorGlobal(Vector2 vector);
-
+float   lengthVectorGlobal(Vector2 v);
+Vector2 normalizedVectorGlobal(Vector2 v);
+void    printVectorGlobal(Vector2 v);
+Vector2 addVectorGlobal(Vector2 v1, Vector2 v2);
+Vector2 multVectorGlobal(Vector2 v, float value);
+float   getAngleGlobal(float angle, float value);
 #endif //RC_GLOBAL_H

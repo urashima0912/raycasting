@@ -13,7 +13,7 @@ static void drawObject(const Object_t *const obj);
 static void drawMap(const Map_t *const map);
 static void drawTile(const Tile_t *const tile);
 static void drawPlayer(const Player_t *const player);
-
+static void drawLineShape(const Line_t *const line);
 //------------------------------------------------------------------------------------
 // Public methods declaration.
 //------------------------------------------------------------------------------------
@@ -69,11 +69,14 @@ static void drawPlayer(const Player_t *const player) {
         6,
         RAYWHITE
     );
-
+    drawLineShape((Line_t *)player->shapeLine.ptr);
+}
+static void drawLineShape(const Line_t *const line) {
     DrawLineV(
-        player->rayLine.ptoA,
-        player->rayLine.ptoB,
-        player->rayLine.color
+        line->ptoA,
+        line->ptoB,
+        line->color
     );
 }
+
 
