@@ -25,11 +25,9 @@ Vector2 multVectorGlobal(Vector2 v, float scalar) {
     return (Vector2){ v.x * scalar, v.y * scalar};
 }
 float getAngleGlobal(float angle, float value) {
-    float newAngle = angle + value;
-    if (newAngle > 360)
-        newAngle = 0;
-    else if (newAngle < 0)
-        newAngle = 360;
+    float newAngle = fmod((angle + value), 360.0f);
+    if (newAngle < 0)
+        newAngle += 360.0f;
     return newAngle;
 }
 
