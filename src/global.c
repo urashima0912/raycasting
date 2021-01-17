@@ -25,9 +25,9 @@ Vector2 multVectorGlobal(Vector2 v, float scalar) {
     return (Vector2){ v.x * scalar, v.y * scalar};
 }
 float getAngleGlobal(float angle, float value) {
-    float newAngle = fmod((angle + value), 360.0f);
+    const float max = 2 * PI;
+    float newAngle = fmod((angle + value), max);
     if (newAngle < 0)
-        newAngle += 360.0f;
+        newAngle += max;
     return newAngle;
 }
-

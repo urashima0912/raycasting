@@ -41,6 +41,6 @@ Line_t *loadLineShape(void) {
     line->ptoA = (Vector2){0};
     line->ptoB = (Vector2){0};
     line->color = COLOR_BASE;
-    line->mod = 20;
+    line->mod = 40;
     return line;
 }

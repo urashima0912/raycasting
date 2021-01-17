@@ -36,8 +36,8 @@ static void updateObject(Object_t *const obj) {
 static void updatePlayerPhysic(Player_t *player) {
     Line_t *const line = player->shapeLine.ptr;
     const float angle = getAngleGlobal(player->angle, player->angleVel);
-    const float angleCos = cos(angle * DEG2RAD);
-    const float angleSin = sin(angle * DEG2RAD);
+    const float angleCos = cos(angle);
+    const float angleSin = sin(angle);
     const Vector2 direction = (Vector2){ angleCos, angleSin };
 
     Vector2 newPosition = player->position;
