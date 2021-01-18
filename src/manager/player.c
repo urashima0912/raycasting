@@ -5,6 +5,8 @@
 // Private methods declaration.
 //------------------------------------------------------------------------------------
 static void initPlayerData(Player_t *const player, Vector2 position);
+static void initPlayerRays(Player_t *const player);
+static void freePlayerRays(Player_t *const player);
 
 //------------------------------------------------------------------------------------
 // Public methods implementation.
@@ -16,6 +18,7 @@ Player_t *initPlayer(Vector2 position) {
 }
 void freePlayer(Player_t ** ptrPlayer) {
     if (ptrPlayer) {
+        freePlayerRays((*ptrPlayer));
         freeShape(&(*ptrPlayer)->shapeLine);
         free(*ptrPlayer);
         *ptrPlayer = NULL;
@@ -31,5 +34,17 @@ static void initPlayerData(Player_t *const player, Vector2 position) {
     player->angle = 0;
     player->angleVel = 0;
     player->velocity = (Vector2){0};
+    initPlayerRays(player);
 }
+static void initPlayerRays(Player_t *const player) {
+    player->rays = malloc(sizeof(struct Ray_t));
+}
+static void freePlayerRays(Player_t *const player) {
+    if (player->rays) {
+        TraceLog(LOG_INFO, "RAYS DELETED...");
+        free(player->rays);
+        player->rays = NULL;
+    }
+}
+
 
