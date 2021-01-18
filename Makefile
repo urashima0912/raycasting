@@ -390,6 +390,7 @@ PROJECT_SOURCE_FILES ?= main.c                          \
                         src/manager/object.c            \
                         src/manager/player.c            \
                         src/manager/shape.c             \
+                        src/manager/ray.c               \
 
 # Define all object files from source files
 OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
