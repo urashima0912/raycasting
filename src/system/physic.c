@@ -20,9 +20,6 @@ static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
 static void updateRay(Ray_t *const ray);
 
-static const Vector2 horizontalRayCollision(Ray_t *const ray);
-static const Vector2 verticalRayCollision(Ray_t *const ray);
-
 //------------------------------------------------------------------------------------
 // Public method implementation.
 //------------------------------------------------------------------------------------
@@ -81,38 +78,18 @@ static void updateRaysPlayer(Player_t *const player) {
     }
 }
 static void updateRay(Ray_t *const ray) {
-    Vector2 vecH = horizontalRayCollision(ray);
-    verticalRayCollision(ray);
-
-    if (vecH.x > 0)
-        ray->ptoB = vecH;
-}
-static const Vector2 horizontalRayCollision(Ray_t *const ray) {
-    Vector2 ptoA = ray->ptoA;
-    Vector2 ptoB = (Vector2){0};
-    float angle = ray->angle;
-    TraceLog(LOG_INFO, TextFormat("angle: %f", angle));
-    const bool upPlayer = isUpPlayer(angle);
-    const bool leftPlayer = isLeftPlayer(angle);
-    // first step.
-    Vector2 ptoAux = (Vector2){0};
-    ptoAux.y = (int32_t)(ptoA.y / TAM_TILE);
-    if (!upPlayer)
-        ptoAux.y += TAM_TILE;
-    ptoAux.x = (ptoAux.y - ptoA.y) / tan(angle);
-
-    ptoB = addVectorGlobal(ptoA, ptoAux);
-    // second step.
-    while (!isCollisionVectorMapPhysic(ptoB) && ptoB.x > 0 && ptoB.x < GetScreenWidth() && ptoB.y > 0 && ptoB.y < GetScreenHeight()) {
-        ptoA = ptoB;
-        ptoAux = (Vector2){0};
-        ptoAux.y = TAM_TILE;
-        ptoAux.x = (ptoAux.y - ptoA.y) / tan(angle);
-        ptoB = addVectorGlobal(ptoA, ptoAux);
+    const Vector2 ptoA = ray->ptoA;
+    Vector2 ptoB = ptoA;
+    Vector2 unit = getUnitVectorToAngle(ray->angle);
+    Vector2 auxVec = (Vector2){0};
+    float mod = 5;
+    bool hit = false;
+    while (!hit) {
+        auxVec = multVectorGlobal(unit, mod);
+        ptoB = addVectorGlobal(ptoA, auxVec);
+        hit = isCollisionVectorMapPhysic(ptoB);
+        if (!hit)
+            mod += 5;
     }
-    return ptoB;
-}
-static const Vector2 verticalRayCollision(Ray_t *const ray) {
-    //TODO
-    return (Vector2){0};
+    ray->ptoB = ptoB;
 }

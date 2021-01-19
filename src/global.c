@@ -35,4 +35,11 @@ Vector2 getSmallVector(Vector2 v1, Vector2 v2) {
     //TODO
     return (Vector2){0};
 }
+Vector2 getUnitVectorToAngle(const float angle) {
+    Vector2 unit = (Vector2){0};
+    unit.x = cos(angle);
+    unit.y = sin(angle);
+    return unit;
+}
+
 
