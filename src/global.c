@@ -31,3 +31,8 @@ float getAngleGlobal(float angle, float value) {
         newAngle += max;
     return newAngle;
 }
+Vector2 getSmallVector(Vector2 v1, Vector2 v2) {
+    //TODO
+    return (Vector2){0};
+}
+

@@ -3,9 +3,12 @@
 #include "../manager/player.h"
 #include "../manager/object.h"
 #include "../manager/map.h"
+#include "../manager/ray.h"
 #include <raylib.h>
 #include <raymath.h>
 #include <stdint.h>
+
+const float TAM_TILE = 50; // CHECK IT.
 
 //------------------------------------------------------------------------------------
 // Private method declaration.
@@ -13,7 +16,13 @@
 static void updateObject(Object_t *const obj);
 static void updatePlayerPhysic(Player_t *player);
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB);
-static bool isCollisonVectorMapPhysic(Vector2 position);
+static bool isCollisionVectorMapPhysic(Vector2 position);
+static void updateRaysPlayer(Player_t *const player);
+static void updateRay(Ray_t *const ray);
+
+static const Vector2 horizontalRayCollision(Ray_t *const ray);
+static const Vector2 verticalRayCollision(Ray_t *const ray);
+
 //------------------------------------------------------------------------------------
 // Public method implementation.
 //------------------------------------------------------------------------------------
@@ -49,16 +58,61 @@ static void updatePlayerPhysic(Player_t *player) {
     Vector2 ptoB = addVectorGlobal(player->position, auxVec);
 
     updateLineShapePhysic(line, player->position, ptoB);
-    if (!isCollisonVectorMapPhysic(newPosition))
+    if (!isCollisionVectorMapPhysic(newPosition))
         player->position = newPosition;
 
     player->angle = angle;
+    updateRaysPlayer(player);
 }
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB) {
     line->ptoA = addVectorGlobal(ptoA, (Vector2){ 3, 3});
     line->ptoB = addVectorGlobal(ptoB, (Vector2){ 3, 3});
 }
-static bool isCollisonVectorMapPhysic(Vector2 position) {
+static bool isCollisionVectorMapPhysic(Vector2 position) {
     const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
     return isCollisionMap(map, position);
+}
+static void updateRaysPlayer(Player_t *const player) {
+    for (int i=0; i < NUM_RAYS; ++i) {
+        Ray_t *const auxRay = &player->rays[i];
+        auxRay->angle = player->angle;
+        updateRay(auxRay);
+        auxRay->ptoA = player->position;
+    }
+}
+static void updateRay(Ray_t *const ray) {
+    Vector2 vecH = horizontalRayCollision(ray);
+    verticalRayCollision(ray);
+
+    if (vecH.x > 0)
+        ray->ptoB = vecH;
+}
+static const Vector2 horizontalRayCollision(Ray_t *const ray) {
+    Vector2 ptoA = ray->ptoA;
+    Vector2 ptoB = (Vector2){0};
+    float angle = ray->angle;
+    TraceLog(LOG_INFO, TextFormat("angle: %f", angle));
+    const bool upPlayer = isUpPlayer(angle);
+    const bool leftPlayer = isLeftPlayer(angle);
+    // first step.
+    Vector2 ptoAux = (Vector2){0};
+    ptoAux.y = (int32_t)(ptoA.y / TAM_TILE);
+    if (!upPlayer)
+        ptoAux.y += TAM_TILE;
+    ptoAux.x = (ptoAux.y - ptoA.y) / tan(angle);
+
+    ptoB = addVectorGlobal(ptoA, ptoAux);
+    // second step.
+    while (!isCollisionVectorMapPhysic(ptoB) && ptoB.x > 0 && ptoB.x < GetScreenWidth() && ptoB.y > 0 && ptoB.y < GetScreenHeight()) {
+        ptoA = ptoB;
+        ptoAux = (Vector2){0};
+        ptoAux.y = TAM_TILE;
+        ptoAux.x = (ptoAux.y - ptoA.y) / tan(angle);
+        ptoB = addVectorGlobal(ptoA, ptoAux);
+    }
+    return ptoB;
+}
+static const Vector2 verticalRayCollision(Ray_t *const ray) {
+    //TODO
+    return (Vector2){0};
 }

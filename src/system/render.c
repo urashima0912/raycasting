@@ -1,5 +1,6 @@
 #include "render.h"
 #include "../../config.h"
+#include "../manager/ray.h"
 #include "../manager/map.h"
 #include "../manager/object.h"
 #include "../manager/tile.h"
@@ -14,6 +15,8 @@ static void drawMap(const Map_t *const map);
 static void drawTile(const Tile_t *const tile);
 static void drawPlayer(const Player_t *const player);
 static void drawLineShape(const Line_t *const line);
+static void drawRay(const Ray_t *const ray);
+
 //------------------------------------------------------------------------------------
 // Public methods declaration.
 //------------------------------------------------------------------------------------
@@ -70,6 +73,8 @@ static void drawPlayer(const Player_t *const player) {
         RAYWHITE
     );
     drawLineShape((Line_t *)player->shapeLine.ptr);
+    for (int i=0; i < NUM_RAYS; ++i)
+        drawRay(&player->rays[i]);
 }
 static void drawLineShape(const Line_t *const line) {
     DrawLineV(
@@ -78,5 +83,13 @@ static void drawLineShape(const Line_t *const line) {
         line->color
     );
 }
+static void drawRay(const Ray_t *const ray) {
+    DrawLineV(
+        ray->ptoA,
+        ray->ptoB,
+        ray->color
+    );
+}
+
 
 
