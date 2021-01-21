@@ -62,18 +62,22 @@ static void updatePlayerPhysic(Player_t *player) {
     updateRaysPlayer(player);
 }
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB) {
-    line->ptoA = addVectorGlobal(ptoA, (Vector2){ 3, 3});
-    line->ptoB = addVectorGlobal(ptoB, (Vector2){ 3, 3});
+    line->ptoA = ptoA;
+    line->ptoB = ptoB;
 }
 static bool isCollisionVectorMapPhysic(Vector2 position) {
     const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
     return isCollisionMap(map, position);
 }
 static void updateRaysPlayer(Player_t *const player) {
+    float rayAngle = player->angle - (PI/6);
+    const float diffAngle = ((float)FOV * DEG2RAD) / NUM_RAYS;
+
     for (int i=0; i < NUM_RAYS; ++i) {
         Ray_t *const auxRay = &player->rays[i];
-        auxRay->angle = player->angle;
+        auxRay->angle = rayAngle;
         updateRay(auxRay);
+        rayAngle += diffAngle;
         auxRay->ptoA = player->position;
     }
 }
@@ -82,14 +86,14 @@ static void updateRay(Ray_t *const ray) {
     Vector2 ptoB = ptoA;
     Vector2 unit = getUnitVectorToAngle(ray->angle);
     Vector2 auxVec = (Vector2){0};
-    float mod = 5;
+    float mod = 2;
     bool hit = false;
     while (!hit) {
         auxVec = multVectorGlobal(unit, mod);
         ptoB = addVectorGlobal(ptoA, auxVec);
         hit = isCollisionVectorMapPhysic(ptoB);
         if (!hit)
-            mod += 5;
+            mod += 2;
     }
     ray->ptoB = ptoB;
 }
