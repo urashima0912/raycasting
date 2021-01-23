@@ -16,8 +16,6 @@ typedef struct Player_t {
 } Player_t;
 
 Player_t    *initPlayer(Vector2 position);
-bool        isUpPlayer(const float angle);
-bool        isLeftPlayer(const float angle);
 void        freePlayer(Player_t ** ptrPlayer);
 
 #endif //RC_PLAYER_H

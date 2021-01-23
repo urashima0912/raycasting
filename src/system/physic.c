@@ -7,6 +7,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 const float TAM_TILE = 50; // CHECK IT.
 
@@ -19,6 +20,9 @@ static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB
 static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
 static void updateRay(Ray_t *const ray);
+
+static Vector2 horizontalCollision(const Ray_t *const ray);
+static Vector2 verticalCollision(const Ray_t *const ray);
 
 //------------------------------------------------------------------------------------
 // Public method implementation.
@@ -70,7 +74,7 @@ static bool isCollisionVectorMapPhysic(Vector2 position) {
     return isCollisionMap(map, position);
 }
 static void updateRaysPlayer(Player_t *const player) {
-    float rayAngle = player->angle - (PI/6);
+    float rayAngle = getAngleGlobal(player->angle, -(PI/6));
     const float diffAngle = ((float)FOV * DEG2RAD) / NUM_RAYS;
 
     for (int i=0; i < NUM_RAYS; ++i) {
@@ -82,18 +86,37 @@ static void updateRaysPlayer(Player_t *const player) {
     }
 }
 static void updateRay(Ray_t *const ray) {
+    const Vector2 vecH = horizontalCollision(ray);
+    const Vector2 vecV = verticalCollision(ray);
+
+    const Vector2 vecTmp = getSmallVector(vecH, vecV);
+    ray->ptoB = addVectorGlobal(ray->ptoA, vecTmp);
+}
+
+static Vector2 horizontalCollision(const Ray_t *const ray) {
+    const float angle = ray->angle;
+    const bool lookUp = isLookUp(angle);
     const Vector2 ptoA = ray->ptoA;
-    Vector2 ptoB = ptoA;
-    Vector2 unit = getUnitVectorToAngle(ray->angle);
-    Vector2 auxVec = (Vector2){0};
-    float mod = 2;
-    bool hit = false;
-    while (!hit) {
-        auxVec = multVectorGlobal(unit, mod);
-        ptoB = addVectorGlobal(ptoA, auxVec);
-        hit = isCollisionVectorMapPhysic(ptoB);
-        if (!hit)
-            mod += 2;
-    }
-    ray->ptoB = ptoB;
+    Vector2 vecTmp = (Vector2){0};
+    vecTmp.y = (int32_t)(floor(ptoA.y / TAM_TILE) * TAM_TILE);
+    if (!lookUp) vecTmp.y += TAM_TILE;
+    vecTmp.y = fabs(ptoA.y - vecTmp.y);
+
+    if (lookUp) vecTmp.y *= -1;
+    vecTmp.x = vecTmp.y / tan(angle);
+    return vecTmp;
+}
+static Vector2 verticalCollision(const Ray_t *const ray) {
+    const float angle = ray->angle;
+    const bool lookLeft = isLookLeft(angle);
+    const Vector2 ptoA = ray->ptoA;
+    Vector2 vecTmp = (Vector2){0};
+
+    vecTmp.x = (int32_t)(floor(ptoA.x / TAM_TILE) * TAM_TILE);
+    if (!lookLeft) vecTmp.x += TAM_TILE;
+    vecTmp.x = fabs(ptoA.x - vecTmp.x);
+    if (lookLeft) vecTmp.x *= -1;
+
+    vecTmp.y = vecTmp.x * tan(angle);
+    return vecTmp;
 }

@@ -72,9 +72,10 @@ static void drawPlayer(const Player_t *const player) {
         6,
         RAYWHITE
     );
-    drawLineShape((Line_t *)player->shapeLine.ptr);
+
     for (int i=0; i < NUM_RAYS; ++i)
         drawRay(&player->rays[i]);
+    drawLineShape((Line_t *)player->shapeLine.ptr);
 }
 static void drawLineShape(const Line_t *const line) {
     DrawLineV(

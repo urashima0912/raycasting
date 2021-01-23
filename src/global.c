@@ -31,9 +31,12 @@ float getAngleGlobal(float angle, float value) {
         newAngle += max;
     return newAngle;
 }
-Vector2 getSmallVector(Vector2 v1, Vector2 v2) {
-    //TODO
-    return (Vector2){0};
+Vector2 getSmallVector(const Vector2 v1, const Vector2 v2) {
+    const float lenV1 = lengthVectorGlobal(v1);
+    const float lenV2 = lengthVectorGlobal(v2);
+
+    if (lenV1 < lenV2) return v1;
+    else return v2;
 }
 Vector2 getUnitVectorToAngle(const float angle) {
     Vector2 unit = (Vector2){0};
@@ -41,5 +44,14 @@ Vector2 getUnitVectorToAngle(const float angle) {
     unit.y = sin(angle);
     return unit;
 }
-
+bool isLookUp(const float angle) {
+    if (angle > PI && angle < 2 * PI)
+        return true;
+    return false;
+}
+bool isLookLeft(const float angle) {
+    if (angle > PI/2 && angle < 3*PI/2)
+        return true;
+    return false;
+}
 

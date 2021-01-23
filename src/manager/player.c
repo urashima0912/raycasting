@@ -15,16 +15,6 @@ Player_t *initPlayer(Vector2 position) {
     initPlayerData(player, position);
     return player;
 }
-bool isUpPlayer(const float angle) {
-    if (angle > PI && angle < 2 * PI)
-        return true;
-    return false;
-}
-bool isLeftPlayer(const float angle) {
-    if (angle > PI/2 && angle < 3*PI/2)
-        return true;
-    return false;
-}
 void freePlayer(Player_t ** ptrPlayer) {
     if (ptrPlayer) {
         freeShape(&(*ptrPlayer)->shapeLine);
