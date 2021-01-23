@@ -14,4 +14,5 @@ Vector2 getSmallVector(const Vector2 v1, const Vector2 v2);
 Vector2 getUnitVectorToAngle(const float angle);
 bool isLookUp(const float angle);
 bool isLookLeft(const float angle);
+bool isPositionInsideMap(const Vector2 v);
 #endif //RC_GLOBAL_H

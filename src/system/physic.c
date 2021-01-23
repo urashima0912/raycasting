@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-const float TAM_TILE = 50; // CHECK IT.
+const float TAM_TILE = 50; //TODO: CHECK IT.
 
 //------------------------------------------------------------------------------------
 // Private method declaration.
@@ -96,27 +96,63 @@ static void updateRay(Ray_t *const ray) {
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
     const bool lookUp = isLookUp(angle);
-    const Vector2 ptoA = ray->ptoA;
+    Vector2 ptoA = ray->ptoA;
     Vector2 vecTmp = (Vector2){0};
+    Vector2 vecTmp2 = (Vector2){0};
+
     vecTmp.y = (int32_t)(floor(ptoA.y / TAM_TILE) * TAM_TILE);
     if (!lookUp) vecTmp.y += TAM_TILE;
     vecTmp.y = fabs(ptoA.y - vecTmp.y);
 
     if (lookUp) vecTmp.y *= -1;
     vecTmp.x = vecTmp.y / tan(angle);
+
+    vecTmp2 = vecTmp;
+    if (lookUp)
+        vecTmp2.y = -(fabs(vecTmp.y) + 1);
+    ptoA = addVectorGlobal(ptoA, vecTmp2);
+    while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
+        vecTmp2 = (Vector2){0};
+        vecTmp2.y = (lookUp) ? -TAM_TILE: TAM_TILE;
+        vecTmp2.x = vecTmp2.y / tan(angle);
+
+        vecTmp = addVectorGlobal(vecTmp, vecTmp2);
+        if (lookUp)
+            vecTmp2.y = -(TAM_TILE + 1);
+
+        ptoA = addVectorGlobal(ptoA, vecTmp2);
+    }
+
     return vecTmp;
 }
 static Vector2 verticalCollision(const Ray_t *const ray) {
+    const bool lookLeft = isLookLeft(ray->angle);
     const float angle = ray->angle;
-    const bool lookLeft = isLookLeft(angle);
-    const Vector2 ptoA = ray->ptoA;
+    Vector2 ptoA = ray->ptoA;
     Vector2 vecTmp = (Vector2){0};
+    Vector2 vecTmp2 = (Vector2){0};
 
     vecTmp.x = (int32_t)(floor(ptoA.x / TAM_TILE) * TAM_TILE);
     if (!lookLeft) vecTmp.x += TAM_TILE;
     vecTmp.x = fabs(ptoA.x - vecTmp.x);
-    if (lookLeft) vecTmp.x *= -1;
 
+    if (lookLeft) vecTmp.x *= -1;
     vecTmp.y = vecTmp.x * tan(angle);
+
+    vecTmp2 = vecTmp;
+    if (lookLeft)
+        vecTmp2.x = -(fabs(vecTmp.x) + 1);
+    ptoA = addVectorGlobal(ptoA, vecTmp2);
+    while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
+        vecTmp2 = (Vector2){0};
+        vecTmp2.x = (lookLeft) ? -TAM_TILE: TAM_TILE;
+        vecTmp2.y = vecTmp2.x * tan(angle);
+
+        vecTmp = addVectorGlobal(vecTmp, vecTmp2);
+        if (lookLeft)
+            vecTmp2.x = -(TAM_TILE + 1);
+        ptoA = addVectorGlobal(ptoA, vecTmp2);
+    }
+
     return vecTmp;
 }

@@ -54,4 +54,11 @@ bool isLookLeft(const float angle) {
         return true;
     return false;
 }
+bool isPositionInsideMap(const Vector2 v) {
+    const int32_t vX = v.x;
+    const int32_t vY = v.y;
+
+    return vX > 0 && vX < GetScreenWidth() && vY > 0 && vY < GetScreenHeight();
+}
+
 

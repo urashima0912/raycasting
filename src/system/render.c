@@ -66,8 +66,8 @@ static void drawTile(const Tile_t *const tile) {
 }
 static void drawPlayer(const Player_t *const player) {
     DrawRectangle(
-        player->position.x,
-        player->position.y,
+        player->position.x - 3,
+        player->position.y - 3,
         6,
         6,
         RAYWHITE
