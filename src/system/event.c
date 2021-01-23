@@ -29,9 +29,9 @@ static void getEventObject(Object_t *const obj) {
 }
 static void getEventPlayer(Player_t *player) {
     if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
-        player->velocity.y = 1;
+        player->velocity.y = 2;
     else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
-        player->velocity.y = -1;
+        player->velocity.y = -2;
     else
         player->velocity.y = 0;
 

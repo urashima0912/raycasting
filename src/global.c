@@ -60,5 +60,12 @@ bool isPositionInsideMap(const Vector2 v) {
 
     return vX > 0 && vX < GetScreenWidth() && vY > 0 && vY < GetScreenHeight();
 }
+float getSmallLengthV(const Vector2 v1, const Vector2 v2) {
+    const float lenV1 = lengthVectorGlobal(v1);
+    const float lenV2 = lengthVectorGlobal(v2);
+
+    if (lenV1 < lenV2) return lenV1;
+    else return lenV2;
+}
 
 

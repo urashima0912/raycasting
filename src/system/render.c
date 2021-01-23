@@ -6,6 +6,10 @@
 #include "../manager/tile.h"
 #include "../manager/player.h"
 #include <raylib.h>
+#include <raymath.h>
+
+static float distanceToPP = 0.0f;
+static int32_t screenMiddle = 0;
 
 //------------------------------------------------------------------------------------
 // Private methods declaration.
@@ -16,6 +20,7 @@ static void drawTile(const Tile_t *const tile);
 static void drawPlayer(const Player_t *const player);
 static void drawLineShape(const Line_t *const line);
 static void drawRay(const Ray_t *const ray);
+static void drawWall(const Ray_t *const ray, int32_t column);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -24,10 +29,15 @@ void initRender(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
     HideCursor();
     SetTargetFPS(SCREEN_FPS);
+
+    const float angle = (FOV / 2) * DEG2RAD;
+    distanceToPP = (GetScreenHeight() / 2) / tan(angle);
+
+    screenMiddle = GetScreenHeight() / 2;
 }
 void updateRender(void) {
     BeginDrawing();
-    ClearBackground(BLACK);
+    ClearBackground(DARKBLUE);
     drawAllObject(&drawObject);
     EndDrawing();
 }
@@ -38,7 +48,7 @@ void updateRender(void) {
 static void drawObject(const Object_t *const obj) {
     switch (obj->type) {
         case OBJ_MAP:
-            drawMap((Map_t *)obj->obj);
+//            drawMap((Map_t *)obj->obj);
             break;
         case OBJ_PLAYER:
             drawPlayer((Player_t *)obj->obj);
@@ -65,17 +75,20 @@ static void drawTile(const Tile_t *const tile) {
     );
 }
 static void drawPlayer(const Player_t *const player) {
-    DrawRectangle(
-        player->position.x - 3,
-        player->position.y - 3,
-        6,
-        6,
-        RAYWHITE
-    );
-
+//    DrawRectangle(
+//        player->position.x - 3,
+//        player->position.y - 3,
+//        6,
+//        6,
+//        RAYWHITE
+//    );
+//
+//    for (int i=0; i < NUM_RAYS; ++i)
+//        drawRay(&player->rays[i]);
+//
+//    drawLineShape((Line_t *)player->shapeLine.ptr);
     for (int i=0; i < NUM_RAYS; ++i)
-        drawRay(&player->rays[i]);
-    drawLineShape((Line_t *)player->shapeLine.ptr);
+        drawWall(&player->rays[i], i);
 }
 static void drawLineShape(const Line_t *const line) {
     DrawLineV(
@@ -91,6 +104,15 @@ static void drawRay(const Ray_t *const ray) {
         ray->color
     );
 }
+static void drawWall(const Ray_t *const ray, int32_t column) {
+    float heightWall = (TAM_TILE /ray->length) * distanceToPP;
+    float pY = screenMiddle - (heightWall / 2);
+
+    Vector2 ptoA = (Vector2){column, pY};
+    Vector2 ptoB = (Vector2){column, pY + heightWall};
+    DrawLineV(ptoA, ptoB, GRAY);
+}
+
 
 
 

@@ -4,12 +4,9 @@
 #include "../manager/object.h"
 #include "../manager/map.h"
 #include "../manager/ray.h"
-#include <raylib.h>
 #include <raymath.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-const float TAM_TILE = 50; //TODO: CHECK IT.
 
 //------------------------------------------------------------------------------------
 // Private method declaration.
@@ -19,7 +16,7 @@ static void updatePlayerPhysic(Player_t *player);
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB);
 static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
-static void updateRay(Ray_t *const ray);
+static void updateRay(Ray_t *const ray, const float angle);
 
 static Vector2 horizontalCollision(const Ray_t *const ray);
 static Vector2 verticalCollision(const Ray_t *const ray);
@@ -80,17 +77,21 @@ static void updateRaysPlayer(Player_t *const player) {
     for (int i=0; i < NUM_RAYS; ++i) {
         Ray_t *const auxRay = &player->rays[i];
         auxRay->angle = rayAngle;
-        updateRay(auxRay);
+        updateRay(auxRay, player->angle);
         rayAngle += diffAngle;
         auxRay->ptoA = player->position;
     }
 }
-static void updateRay(Ray_t *const ray) {
+static void updateRay(Ray_t *const ray, const float angle) {
     const Vector2 vecH = horizontalCollision(ray);
     const Vector2 vecV = verticalCollision(ray);
 
     const Vector2 vecTmp = getSmallVector(vecH, vecV);
     ray->ptoB = addVectorGlobal(ray->ptoA, vecTmp);
+    ray->length = getSmallLengthV(vecH, vecV);
+
+    // fix eye-fish.
+    ray->length = ray->length * cos(angle - ray->angle);
 }
 
 static Vector2 horizontalCollision(const Ray_t *const ray) {
