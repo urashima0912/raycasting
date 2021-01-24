@@ -33,6 +33,10 @@ Map_t *initMap(LevelType_t levelType) {
     map->size = (Vector2){ L0_COLUMN, L0_ROW };
     map->tiles = loadTiles(levelType, map->size);
     map->texture = LoadTexture(TILE_SRC);
+
+    //TODO: change initSprite.
+    map->sprites[0] = initSprite();
+
     return map;
 }
 bool isCollisionMap(const Map_t *const map, Vector2 position) {
@@ -54,6 +58,7 @@ void freeMap(Map_t **ptrMap) {
             free((*ptrMap)->tiles);
             (*ptrMap)->tiles = NULL;
         }
+        freeSprite(&((*ptrMap)->sprites[0]));
         UnloadTexture((*ptrMap)->texture);
         free((*ptrMap));
         (*ptrMap) = NULL;

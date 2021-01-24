@@ -4,9 +4,11 @@
 #include <stdint.h>
 #include <raylib.h>
 #include "tile.h"
+#include "sprite.h"
 
-#define L0_ROW 10
-#define L0_COLUMN 10
+#define L0_ROW      10
+#define L0_COLUMN   10
+#define NUM_SPRITES 1
 
 typedef enum LevelType_t {
     LEVEL_0 = 0,
@@ -17,6 +19,7 @@ typedef struct Map_t {
     Vector2     size;
     Texture     texture;
     Tile_t      **tiles;
+    Sprite_t    *sprites[NUM_SPRITES];
 }Map_t;
 
 Map_t   *initMap(LevelType_t levelType);

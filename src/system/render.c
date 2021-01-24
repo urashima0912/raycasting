@@ -115,7 +115,7 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
 
     Rectangle source = (Rectangle){0};
     source.x = ray->pixelPos;
-    source.y = 2 * 48;
+    source.y = 0;
     source.width = 1;
     source.height = 48;
 
