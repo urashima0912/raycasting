@@ -21,6 +21,7 @@ static void drawPlayer(const Player_t *const player);
 static void drawLineShape(const Line_t *const line);
 static void drawRay(const Ray_t *const ray);
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column);
+static void drawBackground(void);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -50,6 +51,7 @@ static void drawObject(const Object_t *const obj) {
 //            drawMap((Map_t *)obj->obj);
             break;
         case OBJ_PLAYER:
+            drawBackground();
             drawPlayer((Player_t *)obj->obj);
             break;
     }
@@ -113,9 +115,9 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
 
     Rectangle source = (Rectangle){0};
     source.x = ray->pixelPos;
-    source.y = 0;
+    source.y = 2 * 48;
     source.width = 1;
-    source.height = 64;
+    source.height = 48;
 
     Rectangle dest = (Rectangle){0};
     dest.x = ptoA.x;
@@ -134,7 +136,9 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
 
 //    DrawLineV(ptoA, ptoB, GRAY);
 }
-
-
-
+static void drawBackground(void) {
+    const int32_t posY = GetScreenHeight() / 2;
+    DrawRectangle(0, posY, GetScreenWidth(), posY, DARKBROWN);
+//    DrawRectangle(0, 0, GetScreenWidth(), posY, DARKBLUE);
+}
 
