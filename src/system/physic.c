@@ -17,6 +17,7 @@ static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB
 static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
 static void updateRay(Ray_t *const ray, const float angle);
+//static void updateSprite(Sprite_t *const sprite, const Player_t *const player);
 
 static Vector2 horizontalCollision(const Ray_t *const ray);
 static Vector2 verticalCollision(const Ray_t *const ray);
@@ -35,6 +36,9 @@ static void updateObject(Object_t *const obj) {
     switch (obj->type) {
         case OBJ_PLAYER:
             updatePlayerPhysic((Player_t *)obj->obj);
+//            Map_t *const map = storeObject[OBJ_MAP].obj;
+//            for (int32_t i=0; i < NUM_SPRITES; ++i)
+//                updateSprite(map->sprites[i], (Player_t *)obj->obj);
             break;
         case OBJ_MAP:
             break;
@@ -104,7 +108,22 @@ static void updateRay(Ray_t *const ray, const float angle) {
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
 }
-
+//static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
+//    const float pX = sprite->position.x - player->position.x;
+//    const float pY = sprite->position.y - player->position.y;
+//
+//    sprite->length = lengthVectorGlobal((Vector2){pX, pY});
+//    float angle = atan2f(pY, pX);
+//    float diffAngle = player->angle - angle;
+//    if (diffAngle < PI)
+//        diffAngle += 2 * PI;
+//    else if (diffAngle > PI)
+//        diffAngle -= 2 * PI;
+//
+//    sprite->angle = angle - player->angle; //TODO: check it.
+//    const float MIDDLE_FOV = (FOV / 2) * DEG2RAD;
+//    sprite->visible = diffAngle < MIDDLE_FOV;
+//}
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
     const bool lookUp = isLookUp(angle);
@@ -114,19 +133,19 @@ static Vector2 horizontalCollision(const Ray_t *const ray) {
 
     vecTmp.y = (int32_t)(floor(ptoA.y / TAM_TILE) * TAM_TILE);
     if (!lookUp) vecTmp.y += TAM_TILE;
-    vecTmp.y = fabs(ptoA.y - vecTmp.y);
+    vecTmp.y = fabsf(ptoA.y - vecTmp.y);
 
     if (lookUp) vecTmp.y *= -1;
-    vecTmp.x = vecTmp.y / tan(angle);
+    vecTmp.x = vecTmp.y / tanf(angle);
 
     vecTmp2 = vecTmp;
     if (lookUp)
-        vecTmp2.y = -(fabs(vecTmp.y) + 1);
+        vecTmp2.y = -(fabsf(vecTmp.y) + 1);
     ptoA = addVectorGlobal(ptoA, vecTmp2);
     while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
         vecTmp2 = (Vector2){0};
         vecTmp2.y = (lookUp) ? -TAM_TILE: TAM_TILE;
-        vecTmp2.x = vecTmp2.y / tan(angle);
+        vecTmp2.x = vecTmp2.y / tanf(angle);
 
         vecTmp = addVectorGlobal(vecTmp, vecTmp2);
         if (lookUp)
@@ -146,19 +165,19 @@ static Vector2 verticalCollision(const Ray_t *const ray) {
 
     vecTmp.x = (int32_t)(floor(ptoA.x / TAM_TILE) * TAM_TILE);
     if (!lookLeft) vecTmp.x += TAM_TILE;
-    vecTmp.x = fabs(ptoA.x - vecTmp.x);
+    vecTmp.x = fabsf(ptoA.x - vecTmp.x);
 
     if (lookLeft) vecTmp.x *= -1;
-    vecTmp.y = vecTmp.x * tan(angle);
+    vecTmp.y = vecTmp.x * tanf(angle);
 
     vecTmp2 = vecTmp;
     if (lookLeft)
-        vecTmp2.x = -(fabs(vecTmp.x) + 1);
+        vecTmp2.x = -(fabsf(vecTmp.x) + 1);
     ptoA = addVectorGlobal(ptoA, vecTmp2);
     while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
         vecTmp2 = (Vector2){0};
         vecTmp2.x = (lookLeft) ? -TAM_TILE: TAM_TILE;
-        vecTmp2.y = vecTmp2.x * tan(angle);
+        vecTmp2.y = vecTmp2.x * tanf(angle);
 
         vecTmp = addVectorGlobal(vecTmp, vecTmp2);
         if (lookLeft)

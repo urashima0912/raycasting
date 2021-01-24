@@ -5,6 +5,7 @@
 #include <raylib.h>
 #include "tile.h"
 #include "sprite.h"
+#include "ray.h"
 
 #define L0_ROW      10
 #define L0_COLUMN   10
@@ -20,6 +21,7 @@ typedef struct Map_t {
     Texture     texture;
     Tile_t      **tiles;
     Sprite_t    *sprites[NUM_SPRITES];
+    float       zBuffer[NUM_RAYS];
 }Map_t;
 
 Map_t   *initMap(LevelType_t levelType);

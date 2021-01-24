@@ -5,6 +5,7 @@
 #include "../manager/object.h"
 #include "../manager/tile.h"
 #include "../manager/player.h"
+#include "../manager/sprite.h"
 #include <raylib.h>
 #include <raymath.h>
 
@@ -22,6 +23,7 @@ static void drawLineShape(const Line_t *const line);
 static void drawRay(const Ray_t *const ray);
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column);
 static void drawBackground(void);
+//static void drawSprite(Sprite_t *const sprite);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -32,7 +34,7 @@ void initRender(void) {
     SetTargetFPS(SCREEN_FPS);
 
     const float angle = (FOV / 2) * DEG2RAD;
-    distanceToPP = (GetScreenWidth() / 2) / tan(angle);
+    distanceToPP = (GetScreenWidth() / 2) / tanf(angle);
     screenMiddle = GetScreenHeight() / 2;
 }
 void updateRender(void) {
@@ -89,8 +91,10 @@ static void drawPlayer(const Player_t *const player) {
 //
 //    drawLineShape((Line_t *)player->shapeLine.ptr);
     const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
-    for (int i=0; i < NUM_RAYS; ++i)
+    for (int32_t i=0; i < NUM_RAYS; ++i)
         drawWall(map, &player->rays[i], i);
+//    for (int32_t i=0; i < NUM_SPRITES; ++i)
+//        drawSprite(map->sprites[i]);
 }
 static void drawLineShape(const Line_t *const line) {
     DrawLineV(
@@ -107,7 +111,7 @@ static void drawRay(const Ray_t *const ray) {
     );
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
-    float heightWall = (TAM_TILE /ray->length) * distanceToPP;
+    const float heightWall = (TAM_TILE /ray->length) * distanceToPP;
     int32_t pY = screenMiddle - (heightWall / 2);
 
     Vector2 ptoA = (Vector2){column, pY};
@@ -141,4 +145,45 @@ static void drawBackground(void) {
     DrawRectangle(0, posY, GetScreenWidth(), posY, DARKBROWN);
 //    DrawRectangle(0, 0, GetScreenWidth(), posY, DARKBLUE);
 }
-
+//static void drawSprite(Sprite_t *const sprite) {
+//    if (!sprite->visible)
+//        return;
+//
+//    const int32_t WIDTH = 64;
+//    const float heightSprite = (WIDTH/sprite->length) * distanceToPP;
+//    int32_t  pY0 = screenMiddle - (heightSprite / 2);
+//    int32_t  pY1 = pY0 + heightSprite;
+//    const float widthSprite = heightSprite;
+//
+//    const float pX0 = tanf(sprite->angle) * GetScreenHeight();
+//    const float pX = (GetScreenWidth()/2 + pX0 - widthSprite/2);
+//
+//    const int32_t widthColumn = heightSprite/WIDTH;
+//
+//    for (int32_t i=0; i < WIDTH; ++i) {
+//        for (int32_t j=0; j < widthColumn; ++j) {
+//            const int32_t pX1 = pX + ((i-1)*widthColumn) + j;
+//
+//            Rectangle source = (Rectangle){0};
+//            source.x = i;
+//            source.y = 0;
+//            source.width = 1;
+//            source.height = 64;
+//
+//            Rectangle dest = (Rectangle){0};
+//            dest.x = pX1;
+//            dest.y = pY0;
+//            dest.width = 1;
+//            dest.height = heightSprite;
+//
+//            DrawTexturePro(
+//                sprite->texture,
+//                source,
+//                dest,
+//                (Vector2){0, 0},
+//                0.0f,
+//                RAYWHITE
+//            );
+//        }
+//    }
+//}
