@@ -1,6 +1,7 @@
 #include "event.h"
 #include "../manager/object.h"
 #include "../manager/player.h"
+#include "../global.h"
 
 //------------------------------------------------------------------------------------
 // Private method declaration.
@@ -41,6 +42,9 @@ static void getEventPlayer(Player_t *player) {
         player->angleVel = 0.1;
     else
         player->angleVel = 0;
+
+    if (IsKeyPressed(KEY_F1))
+        globalConfig.viewMap = !globalConfig.viewMap;
 }
 
 

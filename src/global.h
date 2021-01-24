@@ -16,6 +16,7 @@ typedef struct gConfig_t {
     int32_t canvasTileHeight;
     int32_t canvasNumRays;
     float FOV;
+    bool viewMap;
 }gConfig_t;
 
 gConfig_t globalConfig;

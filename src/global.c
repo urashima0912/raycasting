@@ -5,16 +5,17 @@
 // Public method implementation.
 //------------------------------------------------------------------------------------
 void initGlobalConfig(void) {
-    globalConfig.screeWidth = 500;
-    globalConfig.screeHeight = 500;
+    globalConfig.screeWidth = 800;
+    globalConfig.screeHeight = 600;
     globalConfig.screenTitle = "Dungeon alpha";
 
-    globalConfig.canvasWidth = 500;
-    globalConfig.canvasHeight = 500;
+    globalConfig.canvasWidth = 480;
+    globalConfig.canvasHeight = 480;
     globalConfig.canvasTileWidth = 0;
     globalConfig.canvasTileHeight = 0;
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;
+    globalConfig.viewMap = false;
 }
 float lengthVectorGlobal(Vector2 v) {
     const float value = pow(v.x, 2) + pow(v.y, 2);
@@ -69,8 +70,10 @@ bool isLookLeft(const float angle) {
 bool isPositionInsideMap(const Vector2 v) {
     const int32_t vX = v.x;
     const int32_t vY = v.y;
+    const int32_t canvasWidth = globalConfig.canvasWidth;
+    const int32_t canvasHeight = globalConfig.canvasHeight;
 
-    return vX > 0 && vX < GetScreenWidth() && vY > 0 && vY < GetScreenHeight();
+    return vX > 0 && vX < canvasWidth && vY > 0 && vY < canvasHeight;
 }
 float getSmallLengthV(const Vector2 v1, const Vector2 v2) {
     const float lenV1 = lengthVectorGlobal(v1);

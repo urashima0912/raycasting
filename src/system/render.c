@@ -39,13 +39,15 @@ void initRender(void) {
     HideCursor();
     SetTargetFPS(SCREEN_FPS);
 
+    const int32_t canvasWidth = globalConfig.canvasWidth;
+    const int32_t canvasHeight = globalConfig.canvasHeight;
     const float angle = (globalConfig.FOV / 2) * DEG2RAD;
-    distanceToPP = (GetScreenWidth() / 2) / tanf(angle);
-    screenMiddle = GetScreenHeight() / 2;
+    distanceToPP = (canvasWidth / 2) / tanf(angle);
+    screenMiddle = canvasHeight / 2;
 }
 void updateRender(void) {
     BeginDrawing();
-    ClearBackground(DARKBLUE);
+    ClearBackground(BLANK);
     drawAllObject(&drawObject);
     EndDrawing();
 }
@@ -56,10 +58,10 @@ void updateRender(void) {
 static void drawObject(const Object_t *const obj) {
     switch (obj->type) {
         case OBJ_MAP:
-//            drawMap((Map_t *)obj->obj);
+            if (globalConfig.viewMap)
+                drawMap((Map_t *)obj->obj);
             break;
         case OBJ_PLAYER:
-//            drawBackground();
             drawPlayer((Player_t *)obj->obj);
             break;
     }
@@ -85,25 +87,27 @@ static void drawTile(const Tile_t *const tile) {
 }
 static void drawPlayer(const Player_t *const player) {
     const int32_t nRays = globalConfig.canvasNumRays;
-//    DrawRectangle(
-//        player->position.x - 3,
-//        player->position.y - 3,
-//        6,
-//        6,
-//        RAYWHITE
-//    );
-//
-//    for (int i=0; i < nRays; ++i)
-//        drawRay(&player->rays[i]);
-//
-//    drawLineShape((Line_t *)player->shapeLine.ptr);
+    if (globalConfig.viewMap) {
+        DrawRectangle(
+            player->position.x - 3,
+            player->position.y - 3,
+            6,
+            6,
+            RAYWHITE
+        );
 
-//3D
-    const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
-    for (int32_t i=0; i < nRays; ++i)
-        drawWall(map, &player->rays[i], i);
+        for (int i=0; i < nRays; ++i)
+            drawRay(&player->rays[i]);
+
+        drawLineShape((Line_t *)player->shapeLine.ptr);
+    } else {
+        drawBackground();
+        const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
+        for (int32_t i=0; i < nRays; ++i)
+            drawWall(map, &player->rays[i], i);
 //    for (int32_t i=0; i < NUM_SPRITES; ++i)
 //        drawSprite(map->sprites[i]);
+    }
 }
 static void drawLineShape(const Line_t *const line) {
     DrawLineV(
@@ -120,7 +124,7 @@ static void drawRay(const Ray_t *const ray) {
     );
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
-    const float heightWall = (globalConfig.canvasTileWidth /ray->length) * distanceToPP;
+    const float heightWall = (globalConfig.canvasTileHeight /ray->length) * distanceToPP;
     int32_t pY = screenMiddle - (heightWall / 2);
 
     Vector2 ptoA = (Vector2){column, pY};
@@ -130,7 +134,7 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
     source.x = ray->pixelPos;
     source.y = 0;
     source.width = 1;
-    source.height = 48;
+    source.height = 48; //TODO: check height of image.
 
     Rectangle dest = (Rectangle){0};
     dest.x = ptoA.x;
@@ -150,9 +154,9 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
 //    DrawLineV(ptoA, ptoB, GRAY);
 }
 static void drawBackground(void) {
-    const int32_t posY = GetScreenHeight() / 2;
-    DrawRectangle(0, posY, GetScreenWidth(), posY, DARKBROWN);
-//    DrawRectangle(0, 0, GetScreenWidth(), posY, DARKBLUE);
+    const int32_t posY = globalConfig.canvasHeight / 2;
+    DrawRectangle(0, 0, globalConfig.canvasWidth, posY, DARKGRAY);
+    DrawRectangle(0, posY, globalConfig.canvasWidth, posY, BROWN);
 }
 //static void drawSprite(Sprite_t *const sprite) {
 //    if (!sprite->visible)
@@ -164,8 +168,8 @@ static void drawBackground(void) {
 //    int32_t  pY1 = pY0 + heightSprite;
 //    const float widthSprite = heightSprite;
 //
-//    const float pX0 = tanf(sprite->angle) * GetScreenHeight();
-//    const float pX = (GetScreenWidth()/2 + pX0 - widthSprite/2);
+//    const float pX0 = tanf(sprite->angle) * globalConfig.canvasHeight;
+//    const float pX = (globalConfig.canvasWidth/2 + pX0 - widthSprite/2);
 //
 //    const int32_t widthColumn = heightSprite/WIDTH;
 //
