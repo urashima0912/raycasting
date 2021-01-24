@@ -119,7 +119,7 @@ static void drawRay(const Ray_t *const ray) {
     );
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
-    const float heightWall = (TAM_TILE /ray->length) * distanceToPP;
+    const float heightWall = (globalConfig.canvasTileWidth /ray->length) * distanceToPP;
     int32_t pY = screenMiddle - (heightWall / 2);
 
     Vector2 ptoA = (Vector2){column, pY};

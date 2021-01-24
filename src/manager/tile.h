@@ -3,8 +3,6 @@
 
 #include <raylib.h>
 
-#define TAM_TILE 50 //TODO: CHECK IT.
-
 typedef enum TileType_t {
     TILE_FLOOR = 0,
     TILE_WALL

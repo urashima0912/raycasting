@@ -97,11 +97,13 @@ static void updateRay(Ray_t *const ray, const float angle) {
     ray->length = getSmallLengthV(vecH, vecV);
 
     if (isHorizontalCollision) {
-        const int32_t diff = (int32_t)(ray->ptoB.x/TAM_TILE) * TAM_TILE;
+        const int32_t tileWidth = globalConfig.canvasTileWidth;
+        const int32_t diff = (int32_t)(ray->ptoB.x/tileWidth) * tileWidth;
         ray->pixelPos = ray->ptoB.x - diff;
     }
     else {
-        const int32_t diff = (int32_t)(ray->ptoB.y/TAM_TILE) * TAM_TILE;
+        const int32_t tileHeight = globalConfig.canvasTileHeight;
+        const int32_t diff = (int32_t)(ray->ptoB.y/tileHeight) * tileHeight;
         ray->pixelPos = ray->ptoB.y - diff;
     }
 
@@ -126,13 +128,14 @@ static void updateRay(Ray_t *const ray, const float angle) {
 //}
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
+    const int32_t tileWidth = globalConfig.canvasTileWidth;
     const bool lookUp = isLookUp(angle);
     Vector2 ptoA = ray->ptoA;
     Vector2 vecTmp = (Vector2){0};
     Vector2 vecTmp2 = (Vector2){0};
 
-    vecTmp.y = (int32_t)(floor(ptoA.y / TAM_TILE) * TAM_TILE);
-    if (!lookUp) vecTmp.y += TAM_TILE;
+    vecTmp.y = (int32_t)(floor(ptoA.y / tileWidth) * tileWidth);
+    if (!lookUp) vecTmp.y += tileWidth;
     vecTmp.y = fabsf(ptoA.y - vecTmp.y);
 
     if (lookUp) vecTmp.y *= -1;
@@ -144,12 +147,12 @@ static Vector2 horizontalCollision(const Ray_t *const ray) {
     ptoA = addVectorGlobal(ptoA, vecTmp2);
     while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
         vecTmp2 = (Vector2){0};
-        vecTmp2.y = (lookUp) ? -TAM_TILE: TAM_TILE;
+        vecTmp2.y = (lookUp) ? -tileWidth: tileWidth;
         vecTmp2.x = vecTmp2.y / tanf(angle);
 
         vecTmp = addVectorGlobal(vecTmp, vecTmp2);
         if (lookUp)
-            vecTmp2.y = -(TAM_TILE + 1);
+            vecTmp2.y = -(tileWidth + 1);
 
         ptoA = addVectorGlobal(ptoA, vecTmp2);
     }
@@ -157,14 +160,15 @@ static Vector2 horizontalCollision(const Ray_t *const ray) {
     return vecTmp;
 }
 static Vector2 verticalCollision(const Ray_t *const ray) {
+    const int32_t tileHeight = globalConfig.canvasTileHeight;
     const bool lookLeft = isLookLeft(ray->angle);
     const float angle = ray->angle;
     Vector2 ptoA = ray->ptoA;
     Vector2 vecTmp = (Vector2){0};
     Vector2 vecTmp2 = (Vector2){0};
 
-    vecTmp.x = (int32_t)(floor(ptoA.x / TAM_TILE) * TAM_TILE);
-    if (!lookLeft) vecTmp.x += TAM_TILE;
+    vecTmp.x = (int32_t)(floor(ptoA.x / tileHeight) * tileHeight);
+    if (!lookLeft) vecTmp.x += tileHeight;
     vecTmp.x = fabsf(ptoA.x - vecTmp.x);
 
     if (lookLeft) vecTmp.x *= -1;
@@ -176,12 +180,12 @@ static Vector2 verticalCollision(const Ray_t *const ray) {
     ptoA = addVectorGlobal(ptoA, vecTmp2);
     while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
         vecTmp2 = (Vector2){0};
-        vecTmp2.x = (lookLeft) ? -TAM_TILE: TAM_TILE;
+        vecTmp2.x = (lookLeft) ? -tileHeight: tileHeight;
         vecTmp2.y = vecTmp2.x * tanf(angle);
 
         vecTmp = addVectorGlobal(vecTmp, vecTmp2);
         if (lookLeft)
-            vecTmp2.x = -(TAM_TILE + 1);
+            vecTmp2.x = -(tileHeight + 1);
         ptoA = addVectorGlobal(ptoA, vecTmp2);
     }
 
