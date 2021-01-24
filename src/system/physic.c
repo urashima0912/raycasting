@@ -77,7 +77,7 @@ static bool isCollisionVectorMapPhysic(Vector2 position) {
 static void updateRaysPlayer(Player_t *const player) {
     const int32_t nRays = globalConfig.canvasNumRays;
     float rayAngle = getAngleGlobal(player->angle, -(PI/6));
-    const float diffAngle = ((float)FOV * DEG2RAD) / nRays;
+    const float diffAngle = ((float)globalConfig.FOV * DEG2RAD) / nRays;
 
     for (int i=0; i < nRays; ++i) {
         Ray_t *const auxRay = &player->rays[i];
@@ -124,7 +124,7 @@ static void updateRay(Ray_t *const ray, const float angle) {
 //        diffAngle -= 2 * PI;
 //
 //    sprite->angle = angle - player->angle; //TODO: check it.
-//    const float MIDDLE_FOV = (FOV / 2) * DEG2RAD;
+//    const float MIDDLE_FOV = (globalConfig.FOV / 2) * DEG2RAD;
 //    sprite->visible = diffAngle < MIDDLE_FOV;
 //}
 static Vector2 horizontalCollision(const Ray_t *const ray) {

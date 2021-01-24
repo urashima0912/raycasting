@@ -39,7 +39,7 @@ void initRender(void) {
     HideCursor();
     SetTargetFPS(SCREEN_FPS);
 
-    const float angle = (FOV / 2) * DEG2RAD;
+    const float angle = (globalConfig.FOV / 2) * DEG2RAD;
     distanceToPP = (GetScreenWidth() / 2) / tanf(angle);
     screenMiddle = GetScreenHeight() / 2;
 }
