@@ -14,8 +14,9 @@ typedef enum LevelType_t {
 
 typedef struct Map_t {
     LevelType_t type;
-    Tile_t **tiles;
-    Vector2 size;
+    Vector2     size;
+    Texture     texture;
+    Tile_t      **tiles;
 }Map_t;
 
 Map_t   *initMap(LevelType_t levelType);

@@ -87,8 +87,19 @@ static void updateRay(Ray_t *const ray, const float angle) {
     const Vector2 vecV = verticalCollision(ray);
 
     const Vector2 vecTmp = getSmallVector(vecH, vecV);
+    const bool isHorizontalCollision = areEqualV(vecH, vecTmp);
+
     ray->ptoB = addVectorGlobal(ray->ptoA, vecTmp);
     ray->length = getSmallLengthV(vecH, vecV);
+
+    if (isHorizontalCollision) {
+        const int32_t diff = (int32_t)(ray->ptoB.x/TAM_TILE) * TAM_TILE;
+        ray->pixelPos = ray->ptoB.x - diff;
+    }
+    else {
+        const int32_t diff = (int32_t)(ray->ptoB.y/TAM_TILE) * TAM_TILE;
+        ray->pixelPos = ray->ptoB.y - diff;
+    }
 
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);

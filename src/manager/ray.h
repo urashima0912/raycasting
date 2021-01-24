@@ -13,6 +13,7 @@ typedef struct Ray_t {
     Vector2 ptoB;
     float   angle;
     float length;
+    float pixelPos;
     Color   color;
 }Ray_t;
 

@@ -67,5 +67,9 @@ float getSmallLengthV(const Vector2 v1, const Vector2 v2) {
     if (lenV1 < lenV2) return lenV1;
     else return lenV2;
 }
+bool areEqualV(const Vector2 v1, const Vector2 v2) {
+    return v1.x == v2.x && v1.y == v2.y;
+}
+
 
 

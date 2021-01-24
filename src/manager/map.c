@@ -7,15 +7,17 @@
 const uint8_t level0[L0_ROW][L0_COLUMN] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
+    {1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+    {1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
+    {1, 0, 0, 1, 0, 1, 0, 0, 0, 1},
     {1, 0, 0, 1, 1, 1, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 };
+
+static const char *TILE_SRC = "assets/sprites/tiles.png";
 
 //------------------------------------------------------------------------------------
 // Private methods declaration.
@@ -30,6 +32,7 @@ Map_t *initMap(LevelType_t levelType) {
     map->type = levelType;
     map->size = (Vector2){ L0_COLUMN, L0_ROW };
     map->tiles = loadTiles(levelType, map->size);
+    map->texture = LoadTexture(TILE_SRC);
     return map;
 }
 bool isCollisionMap(const Map_t *const map, Vector2 position) {
@@ -51,6 +54,7 @@ void freeMap(Map_t **ptrMap) {
             free((*ptrMap)->tiles);
             (*ptrMap)->tiles = NULL;
         }
+        UnloadTexture((*ptrMap)->texture);
         free((*ptrMap));
         (*ptrMap) = NULL;
     }

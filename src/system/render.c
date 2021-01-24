@@ -20,7 +20,7 @@ static void drawTile(const Tile_t *const tile);
 static void drawPlayer(const Player_t *const player);
 static void drawLineShape(const Line_t *const line);
 static void drawRay(const Ray_t *const ray);
-static void drawWall(const Ray_t *const ray, int32_t column);
+static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -31,8 +31,7 @@ void initRender(void) {
     SetTargetFPS(SCREEN_FPS);
 
     const float angle = (FOV / 2) * DEG2RAD;
-    distanceToPP = (GetScreenHeight() / 2) / tan(angle);
-
+    distanceToPP = (GetScreenWidth() / 2) / tan(angle);
     screenMiddle = GetScreenHeight() / 2;
 }
 void updateRender(void) {
@@ -87,8 +86,9 @@ static void drawPlayer(const Player_t *const player) {
 //        drawRay(&player->rays[i]);
 //
 //    drawLineShape((Line_t *)player->shapeLine.ptr);
+    const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
     for (int i=0; i < NUM_RAYS; ++i)
-        drawWall(&player->rays[i], i);
+        drawWall(map, &player->rays[i], i);
 }
 static void drawLineShape(const Line_t *const line) {
     DrawLineV(
@@ -104,13 +104,35 @@ static void drawRay(const Ray_t *const ray) {
         ray->color
     );
 }
-static void drawWall(const Ray_t *const ray, int32_t column) {
+static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
     float heightWall = (TAM_TILE /ray->length) * distanceToPP;
-    float pY = screenMiddle - (heightWall / 2);
+    int32_t pY = screenMiddle - (heightWall / 2);
 
     Vector2 ptoA = (Vector2){column, pY};
-    Vector2 ptoB = (Vector2){column, pY + heightWall};
-    DrawLineV(ptoA, ptoB, GRAY);
+//    Vector2 ptoB = (Vector2){column, pY + heightWall};
+
+    Rectangle source = (Rectangle){0};
+    source.x = ray->pixelPos;
+    source.y = 0;
+    source.width = 1;
+    source.height = 64;
+
+    Rectangle dest = (Rectangle){0};
+    dest.x = ptoA.x;
+    dest.y = ptoA.y;
+    dest.width = 1;
+    dest.height = heightWall;
+
+    DrawTexturePro(
+        map->texture,
+        source,
+        dest,
+        (Vector2){0, 0},
+        0.0f,
+        RAYWHITE
+    );
+
+//    DrawLineV(ptoA, ptoB, GRAY);
 }
 
 
