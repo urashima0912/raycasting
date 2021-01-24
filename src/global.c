@@ -4,6 +4,14 @@
 //------------------------------------------------------------------------------------
 // Public method implementation.
 //------------------------------------------------------------------------------------
+void initGlobalConfig(void) {
+    globalConfig.screeWidth = 500;
+    globalConfig.screeHeight = 500;
+    globalConfig.screenTitle = "Dungeon alpha";
+
+    globalConfig.canvasWidth = 500;
+    globalConfig.canvasHeight = 500;
+}
 float lengthVectorGlobal(Vector2 v) {
     const float value = pow(v.x, 2) + pow(v.y, 2);
     return sqrt(value);

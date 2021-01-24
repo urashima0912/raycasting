@@ -3,8 +3,10 @@
 #include "src/system/event.h"
 #include "src/system/physic.h"
 #include "src/manager/object.h"
+#include "src/global.h"
 
 int main(void) {
+    initGlobalConfig();
     initRender();
     initStoreObject();
     while (!WindowShouldClose()) {

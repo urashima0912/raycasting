@@ -6,6 +6,8 @@
 #include "../manager/tile.h"
 #include "../manager/player.h"
 #include "../manager/sprite.h"
+#include "../global.h"
+
 #include <raylib.h>
 #include <raymath.h>
 
@@ -29,7 +31,11 @@ static void drawBackground(void);
 // Public methods declaration.
 //------------------------------------------------------------------------------------
 void initRender(void) {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE);
+    InitWindow(
+        globalConfig.screeWidth,
+        globalConfig.screeHeight,
+        globalConfig.screenTitle
+    );
     HideCursor();
     SetTargetFPS(SCREEN_FPS);
 
@@ -53,7 +59,7 @@ static void drawObject(const Object_t *const obj) {
 //            drawMap((Map_t *)obj->obj);
             break;
         case OBJ_PLAYER:
-            drawBackground();
+//            drawBackground();
             drawPlayer((Player_t *)obj->obj);
             break;
     }
@@ -90,6 +96,8 @@ static void drawPlayer(const Player_t *const player) {
 //        drawRay(&player->rays[i]);
 //
 //    drawLineShape((Line_t *)player->shapeLine.ptr);
+
+//3D
     const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
     for (int32_t i=0; i < NUM_RAYS; ++i)
         drawWall(map, &player->rays[i], i);
