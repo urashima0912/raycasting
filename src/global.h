@@ -14,6 +14,7 @@ typedef struct gConfig_t {
     int32_t canvasHeight;
     int32_t canvasTileWidth;
     int32_t canvasTileHeight;
+    int32_t canvasNumRays;
 }gConfig_t;
 
 gConfig_t globalConfig;

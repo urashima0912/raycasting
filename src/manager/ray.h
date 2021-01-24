@@ -5,7 +5,6 @@
 #include <stdint.h>
 
 #define RAY_COLOR_BASE  RAYWHITE
-#define NUM_RAYS        500
 #define FOV             60
 
 typedef struct Ray_t {

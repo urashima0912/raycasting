@@ -13,6 +13,7 @@ void initGlobalConfig(void) {
     globalConfig.canvasHeight = 500;
     globalConfig.canvasTileWidth = 0;
     globalConfig.canvasTileHeight = 0;
+    globalConfig.canvasNumRays = globalConfig.canvasWidth;
 }
 float lengthVectorGlobal(Vector2 v) {
     const float value = pow(v.x, 2) + pow(v.y, 2);

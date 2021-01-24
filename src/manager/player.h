@@ -12,7 +12,7 @@ typedef struct Player_t {
     float   angle;
     float   angleVel;
     Shape_t shapeLine;
-    Ray_t   rays[NUM_RAYS];
+    Ray_t   *rays;
 } Player_t;
 
 Player_t    *initPlayer(Vector2 position);

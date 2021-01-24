@@ -21,7 +21,7 @@ typedef struct Map_t {
     Texture     texture;
     Tile_t      **tiles;
     Sprite_t    *sprites[NUM_SPRITES];
-    float       zBuffer[NUM_RAYS];
+    float       *zBuffer;
 }Map_t;
 
 Map_t   *initMap(LevelType_t levelType);

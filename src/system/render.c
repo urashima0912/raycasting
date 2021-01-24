@@ -84,6 +84,7 @@ static void drawTile(const Tile_t *const tile) {
     );
 }
 static void drawPlayer(const Player_t *const player) {
+    const int32_t nRays = globalConfig.canvasNumRays;
 //    DrawRectangle(
 //        player->position.x - 3,
 //        player->position.y - 3,
@@ -92,14 +93,14 @@ static void drawPlayer(const Player_t *const player) {
 //        RAYWHITE
 //    );
 //
-//    for (int i=0; i < NUM_RAYS; ++i)
+//    for (int i=0; i < nRays; ++i)
 //        drawRay(&player->rays[i]);
 //
 //    drawLineShape((Line_t *)player->shapeLine.ptr);
 
 //3D
     const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
-    for (int32_t i=0; i < NUM_RAYS; ++i)
+    for (int32_t i=0; i < nRays; ++i)
         drawWall(map, &player->rays[i], i);
 //    for (int32_t i=0; i < NUM_SPRITES; ++i)
 //        drawSprite(map->sprites[i]);

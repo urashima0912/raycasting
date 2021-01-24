@@ -1,4 +1,5 @@
 #include "player.h"
+#include "../global.h"
 #include <stdlib.h>
 
 //------------------------------------------------------------------------------------
@@ -15,9 +16,11 @@ Player_t *initPlayer(Vector2 position) {
     initPlayerData(player, position);
     return player;
 }
-void freePlayer(Player_t ** ptrPlayer) {
+void freePlayer(Player_t **ptrPlayer) {
     if (ptrPlayer) {
         freeShape(&(*ptrPlayer)->shapeLine);
+        free((*ptrPlayer)->rays);
+        (*ptrPlayer)->rays = NULL;
         free(*ptrPlayer);
         *ptrPlayer = NULL;
     }
@@ -35,7 +38,9 @@ static void initPlayerData(Player_t *const player, Vector2 position) {
     initPlayerRays(player);
 }
 static void initPlayerRays(Player_t *const player) {
-    for (int i=0; i < NUM_RAYS; ++i) {
+    const int32_t nRays = globalConfig.canvasNumRays;
+    player->rays = malloc(sizeof(Ray_t) * nRays);
+    for (int i=0; i < nRays; ++i) {
         player->rays[i].ptoA = player->position;
         player->rays[i].ptoB = (Vector2){0};
         player->rays[i].angle = 0.0f;

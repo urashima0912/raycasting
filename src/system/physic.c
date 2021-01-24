@@ -75,10 +75,11 @@ static bool isCollisionVectorMapPhysic(Vector2 position) {
     return isCollisionMap(map, position);
 }
 static void updateRaysPlayer(Player_t *const player) {
+    const int32_t nRays = globalConfig.canvasNumRays;
     float rayAngle = getAngleGlobal(player->angle, -(PI/6));
-    const float diffAngle = ((float)FOV * DEG2RAD) / NUM_RAYS;
+    const float diffAngle = ((float)FOV * DEG2RAD) / nRays;
 
-    for (int i=0; i < NUM_RAYS; ++i) {
+    for (int i=0; i < nRays; ++i) {
         Ray_t *const auxRay = &player->rays[i];
         auxRay->angle = rayAngle;
         updateRay(auxRay, player->angle);
