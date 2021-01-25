@@ -25,7 +25,7 @@ static void drawLineShape(const Line_t *const line);
 static void drawRay(const Ray_t *const ray);
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column);
 static void drawBackground(void);
-//static void drawSprite(Sprite_t *const sprite);
+static void drawSprite(Sprite_t *const sprite);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -105,8 +105,8 @@ static void drawPlayer(const Player_t *const player) {
         const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
         for (int32_t i=0; i < nRays; ++i)
             drawWall(map, &player->rays[i], i);
-//    for (int32_t i=0; i < NUM_SPRITES; ++i)
-//        drawSprite(map->sprites[i]);
+        for (int32_t i=0; i < NUM_SPRITES; ++i)
+            drawSprite(map->sprites[i]);
     }
 }
 static void drawLineShape(const Line_t *const line) {
@@ -124,9 +124,9 @@ static void drawRay(const Ray_t *const ray) {
     );
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
-    const float heightWall = (globalConfig.canvasTileHeight /ray->length) * distanceToPP;
-    int32_t pY = screenMiddle - (heightWall / 2);
+    float heightWall = (globalConfig.canvasTileHeight /ray->length) * distanceToPP;
 
+    int32_t pY = screenMiddle - (heightWall / 2);
     Vector2 ptoA = (Vector2){column, pY};
 //    Vector2 ptoB = (Vector2){column, pY + heightWall};
 
@@ -158,45 +158,45 @@ static void drawBackground(void) {
     DrawRectangle(0, 0, globalConfig.canvasWidth, posY, DARKGRAY);
     DrawRectangle(0, posY, globalConfig.canvasWidth, posY, BROWN);
 }
-//static void drawSprite(Sprite_t *const sprite) {
-//    if (!sprite->visible)
-//        return;
-//
-//    const int32_t WIDTH = 64;
-//    const float heightSprite = (WIDTH/sprite->length) * distanceToPP;
-//    int32_t  pY0 = screenMiddle - (heightSprite / 2);
-//    int32_t  pY1 = pY0 + heightSprite;
-//    const float widthSprite = heightSprite;
-//
-//    const float pX0 = tanf(sprite->angle) * globalConfig.canvasHeight;
-//    const float pX = (globalConfig.canvasWidth/2 + pX0 - widthSprite/2);
-//
-//    const int32_t widthColumn = heightSprite/WIDTH;
-//
-//    for (int32_t i=0; i < WIDTH; ++i) {
-//        for (int32_t j=0; j < widthColumn; ++j) {
-//            const int32_t pX1 = pX + ((i-1)*widthColumn) + j;
-//
-//            Rectangle source = (Rectangle){0};
-//            source.x = i;
-//            source.y = 0;
-//            source.width = 1;
-//            source.height = 64;
-//
-//            Rectangle dest = (Rectangle){0};
-//            dest.x = pX1;
-//            dest.y = pY0;
-//            dest.width = 1;
-//            dest.height = heightSprite;
-//
-//            DrawTexturePro(
-//                sprite->texture,
-//                source,
-//                dest,
-//                (Vector2){0, 0},
-//                0.0f,
-//                RAYWHITE
-//            );
-//        }
-//    }
-//}
+static void drawSprite(Sprite_t *const sprite) {
+    if (!sprite->visible)
+        return;
+
+    const int32_t WIDTH = 64;
+    const float heightSprite = (WIDTH/sprite->length) * distanceToPP;
+    int32_t  pY0 = screenMiddle - (heightSprite / 2);
+    int32_t  pY1 = pY0 + heightSprite;
+    const float widthSprite = heightSprite;
+
+    const float pX0 = tanf(sprite->angle) * globalConfig.canvasHeight;
+    const float pX = (globalConfig.canvasWidth/2 + pX0 - widthSprite/2);
+
+    const int32_t widthColumn = heightSprite/WIDTH;
+
+    for (int32_t i=0; i < WIDTH; ++i) {
+        for (int32_t j=0; j < widthColumn; ++j) {
+            const int32_t pX1 = pX + ((i-1)*widthColumn) + j;
+
+            Rectangle source = (Rectangle){0};
+            source.x = i;
+            source.y = 0;
+            source.width = 1;
+            source.height = 64;
+
+            Rectangle dest = (Rectangle){0};
+            dest.x = pX1;
+            dest.y = pY0;
+            dest.width = 1;
+            dest.height = heightSprite;
+
+            DrawTexturePro(
+                sprite->texture,
+                source,
+                dest,
+                (Vector2){0, 0},
+                0.0f,
+                RAYWHITE
+            );
+        }
+    }
+}

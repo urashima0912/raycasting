@@ -5,16 +5,17 @@
 // Public method implementation.
 //------------------------------------------------------------------------------------
 void initGlobalConfig(void) {
-    globalConfig.screeWidth = 800;
-    globalConfig.screeHeight = 600;
+    globalConfig.screeWidth = 500;
+    globalConfig.screeHeight = 500;
     globalConfig.screenTitle = "Dungeon alpha";
 
-    globalConfig.canvasWidth = 480;
-    globalConfig.canvasHeight = 480;
+    globalConfig.canvasWidth = 500;
+    globalConfig.canvasHeight = 500;
     globalConfig.canvasTileWidth = 0;
     globalConfig.canvasTileHeight = 0;
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;
+    globalConfig.middleFOV = globalConfig.FOV / 2.0f;
     globalConfig.viewMap = false;
 }
 float lengthVectorGlobal(Vector2 v) {
@@ -39,7 +40,7 @@ Vector2 multVectorGlobal(Vector2 v, float scalar) {
 }
 float getAngleGlobal(float angle, float value) {
     const float max = 2 * PI;
-    float newAngle = fmod((angle + value), max);
+    float newAngle = fmodf((angle + value), max);
     if (newAngle < 0)
         newAngle += max;
     return newAngle;
@@ -73,7 +74,7 @@ bool isPositionInsideMap(const Vector2 v) {
     const int32_t canvasWidth = globalConfig.canvasWidth;
     const int32_t canvasHeight = globalConfig.canvasHeight;
 
-    return vX > 0 && vX < canvasWidth && vY > 0 && vY < canvasHeight;
+    return vX >= 0 && vX < canvasWidth && vY >= 0 && vY < canvasHeight;
 }
 float getSmallLengthV(const Vector2 v1, const Vector2 v2) {
     const float lenV1 = lengthVectorGlobal(v1);

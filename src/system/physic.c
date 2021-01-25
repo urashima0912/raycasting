@@ -17,7 +17,7 @@ static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB
 static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
 static void updateRay(Ray_t *const ray, const float angle);
-//static void updateSprite(Sprite_t *const sprite, const Player_t *const player);
+static void updateSprite(Sprite_t *const sprite, const Player_t *const player);
 
 static Vector2 horizontalCollision(const Ray_t *const ray);
 static Vector2 verticalCollision(const Ray_t *const ray);
@@ -36,9 +36,9 @@ static void updateObject(Object_t *const obj) {
     switch (obj->type) {
         case OBJ_PLAYER:
             updatePlayerPhysic((Player_t *)obj->obj);
-//            Map_t *const map = storeObject[OBJ_MAP].obj;
-//            for (int32_t i=0; i < NUM_SPRITES; ++i)
-//                updateSprite(map->sprites[i], (Player_t *)obj->obj);
+            Map_t *const map = storeObject[OBJ_MAP].obj;
+            for (int32_t i=0; i < NUM_SPRITES; ++i)
+                updateSprite(map->sprites[i], (Player_t *)obj->obj);
             break;
         case OBJ_MAP:
             break;
@@ -111,22 +111,21 @@ static void updateRay(Ray_t *const ray, const float angle) {
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
 }
-//static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
-//    const float pX = sprite->position.x - player->position.x;
-//    const float pY = sprite->position.y - player->position.y;
-//
-//    sprite->length = lengthVectorGlobal((Vector2){pX, pY});
-//    float angle = atan2f(pY, pX);
-//    float diffAngle = player->angle - angle;
-//    if (diffAngle < PI)
-//        diffAngle += 2 * PI;
-//    else if (diffAngle > PI)
-//        diffAngle -= 2 * PI;
-//
-//    sprite->angle = angle - player->angle; //TODO: check it.
-//    const float MIDDLE_FOV = (globalConfig.FOV / 2) * DEG2RAD;
-//    sprite->visible = diffAngle < MIDDLE_FOV;
-//}
+static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
+    const float pX = sprite->position.x - player->position.x;
+    const float pY = sprite->position.y - player->position.y;
+
+    sprite->length = lengthVectorGlobal((Vector2){pX, pY});
+    float angle = atan2f(pY, pX);
+    float diffAngle = player->angle - angle;
+    if (diffAngle < -PI) diffAngle += 2 * PI;
+    else if (diffAngle > PI) diffAngle -= 2 * PI;
+
+    diffAngle = fabs(diffAngle);
+    sprite->angle = angle - player->angle; //TODO: check it.
+    const float middleFOV = globalConfig.middleFOV * DEG2RAD;
+    sprite->visible = (diffAngle < middleFOV);
+}
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
     const int32_t tileWidth = globalConfig.canvasTileWidth;
