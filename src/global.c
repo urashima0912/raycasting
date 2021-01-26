@@ -5,14 +5,14 @@
 // Public method implementation.
 //------------------------------------------------------------------------------------
 void initGlobalConfig(void) {
-    globalConfig.screeWidth = 500;
-    globalConfig.screeHeight = 500;
+    globalConfig.screeWidth = 640;
+    globalConfig.screeHeight = 480;
     globalConfig.screenTitle = "Dungeon alpha";
 
-    globalConfig.canvasWidth = 500;
-    globalConfig.canvasHeight = 500;
-    globalConfig.canvasTileWidth = 0;
-    globalConfig.canvasTileHeight = 0;
+    globalConfig.canvasWidth = 640;
+    globalConfig.canvasHeight = 480;
+    globalConfig.canvasTileWidth = 48;
+    globalConfig.canvasTileHeight = 48;
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;
     globalConfig.middleFOV = globalConfig.FOV / 2.0f;

@@ -74,9 +74,6 @@ void freeMap(Map_t **ptrMap) {
 //------------------------------------------------------------------------------------
 static Tile_t **loadTiles(LevelType_t levelType, Vector2 size) {
     Tile_t **tiles = NULL;
-    globalConfig.canvasTileWidth = globalConfig.canvasWidth / size.x;
-    globalConfig.canvasTileHeight = globalConfig.canvasHeight / size.y;
-
     const int32_t tileWidth = globalConfig.canvasTileWidth;
     const int32_t tileHeight = globalConfig.canvasTileHeight;
     const Vector2 tileSize = (Vector2){ tileWidth, tileHeight };

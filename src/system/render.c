@@ -134,7 +134,7 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
     source.x = ray->pixelPos;
     source.y = 0;
     source.width = 1;
-    source.height = 48; //TODO: check height of image.
+    source.height = globalConfig.canvasTileHeight;
 
     Rectangle dest = (Rectangle){0};
     dest.x = ptoA.x;
