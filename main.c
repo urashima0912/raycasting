@@ -7,6 +7,7 @@
 
 int main(void) {
     initGlobalConfig();
+    initGlobalZBuffer();
     initRender();
     initStoreObject();
     while (!WindowShouldClose()) {
@@ -15,6 +16,7 @@ int main(void) {
         updateRender();
     }
     freeStoreObject();
+    freeGlobalZBuffer();
     CloseWindow();
     return 0;
 }

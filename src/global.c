@@ -1,5 +1,6 @@
 #include "global.h"
 #include <raymath.h>
+#include <stdlib.h>
 
 //------------------------------------------------------------------------------------
 // Public method implementation.
@@ -17,6 +18,16 @@ void initGlobalConfig(void) {
     globalConfig.FOV = 60.0f;
     globalConfig.middleFOV = globalConfig.FOV / 2.0f;
     globalConfig.viewMap = false;
+}
+void initGlobalZBuffer(void) {
+    const int32_t nRays = globalConfig.canvasWidth;
+    globalZBuffer = malloc(sizeof(float *) * nRays);
+}
+void freeGlobalZBuffer(void) {
+    if (globalZBuffer) {
+        free(globalZBuffer);
+        globalZBuffer = NULL;
+    }
 }
 float lengthVectorGlobal(Vector2 v) {
     const float value = pow(v.x, 2) + pow(v.y, 2);

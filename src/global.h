@@ -20,9 +20,12 @@ typedef struct gConfig_t {
     bool viewMap;
 }gConfig_t;
 
-gConfig_t globalConfig;
+gConfig_t   globalConfig;
+float       *globalZBuffer;
 
 void        initGlobalConfig(void);
+void        initGlobalZBuffer(void);
+void        freeGlobalZBuffer(void);
 void        printVectorGlobal(Vector2 v);
 float       lengthVectorGlobal(Vector2 v);
 float       getAngleGlobal(float angle, float value);

@@ -37,8 +37,6 @@ Map_t *initMap(LevelType_t levelType) {
 
     //TODO: change initSprite.
     map->sprites[0] = initSprite();
-    const int32_t nRays = globalConfig.canvasNumRays;
-    map->zBuffer = malloc(sizeof(float) * nRays);
     return map;
 }
 bool isCollisionMap(const Map_t *const map, Vector2 position) {
@@ -62,8 +60,6 @@ void freeMap(Map_t **ptrMap) {
         }
         freeSprite(&((*ptrMap)->sprites[0]));
         UnloadTexture((*ptrMap)->texture);
-        free((*ptrMap)->zBuffer);
-        (*ptrMap)->zBuffer = NULL;
         free((*ptrMap));
         (*ptrMap) = NULL;
     }
