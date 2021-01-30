@@ -16,7 +16,7 @@ static void updatePlayerPhysic(Player_t *player);
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB);
 static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
-static void updateRay(Ray_t *const ray, const float angle);
+static void updateRay(Ray_t *const ray, const float angle, const int32_t column);
 static void updateSprite(Sprite_t *const sprite, const Player_t *const player);
 
 static Vector2 horizontalCollision(const Ray_t *const ray);
@@ -82,12 +82,12 @@ static void updateRaysPlayer(Player_t *const player) {
     for (int i=0; i < nRays; ++i) {
         Ray_t *const auxRay = &player->rays[i];
         auxRay->angle = rayAngle;
-        updateRay(auxRay, player->angle);
+        updateRay(auxRay, player->angle, i);
         rayAngle += diffAngle;
         auxRay->ptoA = player->position;
     }
 }
-static void updateRay(Ray_t *const ray, const float angle) {
+static void updateRay(Ray_t *const ray, const float angle, const int32_t column) {
     const Vector2 vecH = horizontalCollision(ray);
     const Vector2 vecV = verticalCollision(ray);
 
@@ -110,6 +110,7 @@ static void updateRay(Ray_t *const ray, const float angle) {
 
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
+    globalZBuffer[column] = ray->length;
 }
 static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
     const float pX = sprite->position.x - player->position.x;
