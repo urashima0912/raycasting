@@ -1,6 +1,13 @@
 #include "global.h"
 #include <raymath.h>
 #include <stdlib.h>
+//------------------------------------------------------------------------------------
+// Private method declaration.
+//------------------------------------------------------------------------------------
+static void     quicksort(int32_t *array, int32_t low, int32_t high);
+static int32_t  getMiddleIndex(int32_t *array, int32_t low, int32_t high);
+static void     swap(int32_t *a, int32_t *b);
+
 
 //------------------------------------------------------------------------------------
 // Public method implementation.
@@ -28,6 +35,9 @@ void freeGlobalZBuffer(void) {
         free(globalZBuffer);
         globalZBuffer = NULL;
     }
+}
+void sortArrayGlobal(int32_t *array, int32_t size) {
+    quicksort(array, 0, size);
 }
 float lengthVectorGlobal(Vector2 v) {
     const float value = pow(v.x, 2) + pow(v.y, 2);
@@ -97,6 +107,33 @@ float getSmallLengthV(const Vector2 v1, const Vector2 v2) {
 bool areEqualV(const Vector2 v1, const Vector2 v2) {
     return v1.x == v2.x && v1.y == v2.y;
 }
+//------------------------------------------------------------------------------------
+// Private method implementation.
+//------------------------------------------------------------------------------------
+static void swap(int32_t *a, int32_t *b) {
+    int32_t tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+static void quicksort(int32_t *array, int32_t low, int32_t high) {
+    if (low < high) {
+        int32_t index = getMiddleIndex(array, low, high);
+        quicksort(array, low, index - 1);
+        quicksort(array, index + 1, high);
+    }
+}
+static int32_t getMiddleIndex(int32_t *array, int32_t low, int32_t high) {
+    int32_t pivot = array[high];
+    int32_t index = low - 1;
 
+    for (int32_t k=low; k < (high - 1); ++k) {
+        if (array[k] < pivot) {
+            ++index;
+            swap(&array[index], &array[k]);
+        }
+    }
+    swap(&array[index + 1], &array[high]);
+    return (index + 1);
+}
 
 

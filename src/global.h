@@ -4,6 +4,10 @@
 #include <raylib.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct gConfig_t {
     // window data.
     int32_t screeWidth;
@@ -27,6 +31,7 @@ void        initGlobalConfig(void);
 void        initGlobalZBuffer(void);
 void        freeGlobalZBuffer(void);
 void        printVectorGlobal(Vector2 v);
+void        sortArrayGlobal(int32_t *array, int32_t size);
 float       lengthVectorGlobal(Vector2 v);
 float       getAngleGlobal(float angle, float value);
 float       getSmallLengthV(const Vector2 v1, const Vector2 v2);
@@ -39,5 +44,9 @@ Vector2     addVectorGlobal(Vector2 v1, Vector2 v2);
 Vector2     multVectorGlobal(Vector2 v, float value);
 Vector2     getSmallVector(const Vector2 v1, const Vector2 v2);
 Vector2     getUnitVectorToAngle(const float angle);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //RC_GLOBAL_H
