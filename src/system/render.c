@@ -158,6 +158,7 @@ static void drawBackground(void) {
     DrawRectangle(0, 0, globalConfig.canvasWidth, posY, DARKGRAY);
     DrawRectangle(0, posY, globalConfig.canvasWidth, posY, BROWN);
 }
+//TODO:I need check it(problem with sprite render).
 static void drawSprite(Sprite_t *const sprite) {
     if (!sprite->visible)
         return;
