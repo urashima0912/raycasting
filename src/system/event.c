@@ -37,9 +37,9 @@ static void getEventPlayer(Player_t *player) {
         player->velocity.y = 0;
 
     if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
-        player->angleVel = -0.1;
+        player->angleVel = -0.05;
     else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
-        player->angleVel = 0.1;
+        player->angleVel = 0.05;
     else
         player->angleVel = 0;
 
