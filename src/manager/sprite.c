@@ -8,6 +8,7 @@ Sprite_t *initSprite(void) {
     sprite->position = (Vector2){100, 70};
     sprite->angle = 0;
     sprite->length = 0;
+    sprite->size = (Vector2i_t){64, 64};
     sprite->visible = false;
     return sprite;
 }

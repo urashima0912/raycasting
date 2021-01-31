@@ -162,8 +162,7 @@ static void drawSprite(Sprite_t *const sprite) {
     if (!sprite->visible)
         return;
 
-    const int32_t WIDTH = 64; //TODO check it (sprite width).
-    const float heightSprite = (WIDTH/sprite->length) * distanceToPP;
+    const float heightSprite = (sprite->size.y/sprite->length) * distanceToPP;
 
     int32_t  pY0 = screenMiddle - (heightSprite / 2);
     int32_t  pY1 = pY0 + heightSprite;
@@ -175,9 +174,9 @@ static void drawSprite(Sprite_t *const sprite) {
     const float pX0 = tanf(sprite->angle) * distanceToPP;
     const float pX = (globalConfig.canvasWidth/2 + pX0 - widthTexture/2);
 
-    const float widthColumn = heightTexture/WIDTH;
+    const float widthColumn = heightTexture/sprite->size.y;
 
-    for (int32_t i=0; i < WIDTH; ++i) {
+    for (int32_t i=0; i < sprite->size.x; ++i) {
         for (int32_t j=0; j < (int32_t)widthColumn + 1; ++j) {
             const float pX1 = pX + ((i-1)*widthColumn) + j;
             if (pX1 >= globalConfig.canvasWidth || pX1 < 0)
@@ -189,7 +188,7 @@ static void drawSprite(Sprite_t *const sprite) {
             source.x = i;
             source.y = 0;
             source.width = 1;
-            source.height = WIDTH;
+            source.height = sprite->size.y;
 
             Rectangle dest = (Rectangle){0};
             dest.x = pX1;

@@ -8,6 +8,11 @@
 extern "C" {
 #endif
 
+typedef struct Vector2i_t {
+    int32_t x;
+    int32_t y;
+}Vector2i_t;
+
 typedef struct gConfig_t {
     // window data.
     int32_t screeWidth;
