@@ -110,6 +110,7 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
 
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
+    //it store all rays distance.
     globalZBuffer[column] = ray->length;
 }
 static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
@@ -117,6 +118,7 @@ static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
     const float pY = sprite->position.y - player->position.y;
 
     sprite->length = lengthVectorGlobal((Vector2){pX, pY});
+
     float angle = atan2f(pY, pX);
     float diffAngle = player->angle - angle;
     if (diffAngle < -PI) diffAngle += 2 * PI;

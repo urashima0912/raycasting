@@ -162,32 +162,40 @@ static void drawSprite(Sprite_t *const sprite) {
     if (!sprite->visible)
         return;
 
-    const int32_t WIDTH = 64;
+    const int32_t WIDTH = 64; //TODO check it (sprite width).
     const float heightSprite = (WIDTH/sprite->length) * distanceToPP;
+
     int32_t  pY0 = screenMiddle - (heightSprite / 2);
     int32_t  pY1 = pY0 + heightSprite;
-    const float widthSprite = heightSprite;
+    
+    const float heightTexture = fabsf(pY0 - pY1);
+    const float widthTexture = heightTexture;
+    
 
-    const float pX0 = tanf(sprite->angle) * globalConfig.canvasHeight;
-    const float pX = (globalConfig.canvasWidth/2 + pX0 - widthSprite/2);
+    const float pX0 = tanf(sprite->angle) * distanceToPP;
+    const float pX = (globalConfig.canvasWidth/2 + pX0 - widthTexture/2);
 
-    const int32_t widthColumn = heightSprite/WIDTH;
+    const float widthColumn = heightTexture/WIDTH;
 
     for (int32_t i=0; i < WIDTH; ++i) {
-        for (int32_t j=0; j < widthColumn; ++j) {
-            const int32_t pX1 = pX + ((i-1)*widthColumn) + j;
+        for (int32_t j=0; j < (int32_t)widthColumn + 1; ++j) {
+            const float pX1 = pX + ((i-1)*widthColumn) + j;
+            if (pX1 >= globalConfig.canvasWidth || pX1 < 0)
+                break;
 
+            if (globalZBuffer[(int32_t)pX1] < sprite->length)
+                break;
             Rectangle source = (Rectangle){0};
             source.x = i;
             source.y = 0;
             source.width = 1;
-            source.height = 64;
+            source.height = WIDTH;
 
             Rectangle dest = (Rectangle){0};
             dest.x = pX1;
             dest.y = pY0;
             dest.width = 1;
-            dest.height = heightSprite;
+            dest.height = heightTexture;
 
             DrawTexturePro(
                 sprite->texture,
