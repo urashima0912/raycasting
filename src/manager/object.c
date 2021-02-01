@@ -19,9 +19,9 @@ void updateAllObject(void (*funcPtr)(Object_t *const)) {
     for (int i=0; i < NUM_OBJECTS; ++i)
         funcPtr(&storeObject[i]);
 }
-void drawAllObject(void (*funcPrt)(const Object_t *const)) {
+void drawAllObject(void (*funcPtr)(const Object_t *const)) {
     for (int i=0; i < NUM_OBJECTS; ++i)
-        funcPrt(&storeObject[i]);
+        funcPtr(&storeObject[i]);
 }
 void freeStoreObject(void) {
     // Free map.
