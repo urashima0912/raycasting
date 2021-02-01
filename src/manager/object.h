@@ -21,7 +21,7 @@ Object_t storeObject[NUM_OBJECTS];
 
 void initStoreObject(void);
 void updateAllObject(void (*funcPtr)(Object_t *const));
-void drawAllObject(void (*funcPrt)(const Object_t *const));
+void drawAllObject(void (*funcPtr)(const Object_t *const));
 void freeStoreObject(void);
 
 #ifdef __cplusplus
