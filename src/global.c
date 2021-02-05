@@ -16,11 +16,12 @@ void initGlobalConfig(void) {
     globalConfig.screeWidth = 640;
     globalConfig.screeHeight = 480;
     globalConfig.screenTitle = "Dungeon alpha";
-
-    globalConfig.canvasWidth = 640;
-    globalConfig.canvasHeight = 480;
     globalConfig.canvasTileWidth = 48;
     globalConfig.canvasTileHeight = 48;
+
+    globalConfig.canvasWidth = L0_COLUMN * globalConfig.canvasTileWidth;
+    globalConfig.canvasHeight = L0_ROW * globalConfig.canvasTileHeight;
+
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;
     globalConfig.middleFOV = globalConfig.FOV / 2.0f;

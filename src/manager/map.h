@@ -7,8 +7,6 @@
 #include "sprite.h"
 #include "ray.h"
 
-#define L0_ROW      10
-#define L0_COLUMN   10
 #define NUM_SPRITES 1
 
 #ifdef __cplusplus

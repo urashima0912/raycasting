@@ -35,6 +35,7 @@ static void initPlayerData(Player_t *const player, Vector2 position) {
     player->angle = 0;
     player->angleVel = 0;
     player->velocity = (Vector2){0};
+    player->posZ = globalConfig.canvasHeight >> 1;
     initPlayerRays(player);
 }
 static void initPlayerRays(Player_t *const player) {

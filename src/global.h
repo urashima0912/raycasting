@@ -4,6 +4,9 @@
 #include <raylib.h>
 #include <stdint.h>
 
+#define L0_ROW      16
+#define L0_COLUMN   16
+
 #ifdef __cplusplus
 extern "C" {
 #endif

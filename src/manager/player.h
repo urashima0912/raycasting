@@ -15,6 +15,7 @@ typedef struct Player_t {
     Vector2 velocity;
     float angle;
     float angleVel;
+    float posZ;
     Shape_t shapeLine;
     Ray_t *rays;
 } Player_t;

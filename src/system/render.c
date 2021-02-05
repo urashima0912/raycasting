@@ -26,6 +26,7 @@ static void drawRay(const Ray_t *const ray);
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column);
 static void drawBackground(void);
 static void drawSprite(Sprite_t *const sprite);
+static void drawCeiling(const Player_t *const player);
 
 //------------------------------------------------------------------------------------
 // Public methods declaration.
@@ -43,7 +44,8 @@ void initRender(void) {
     const int32_t canvasHeight = globalConfig.canvasHeight;
     const float angle = (globalConfig.FOV / 2) * DEG2RAD;
     distanceToPP = (canvasWidth / 2) / tanf(angle);
-    screenMiddle = canvasHeight / 2;
+    const float diff = fabsf(globalConfig.screeHeight - canvasHeight);
+    screenMiddle = (canvasHeight - diff)/ 2;
 }
 void updateRender(void) {
     BeginDrawing();
@@ -103,10 +105,12 @@ static void drawPlayer(const Player_t *const player) {
     } else {
         drawBackground();
         const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
-        for (int32_t i=0; i < nRays; ++i)
+        drawCeiling(player);
+        for (int32_t i=0; i < nRays; ++i) {
             drawWall(map, &player->rays[i], i);
-        for (int32_t i=0; i < NUM_SPRITES; ++i)
-            drawSprite(map->sprites[i]);
+        }
+//        for (int32_t i=0; i < NUM_SPRITES; ++i)
+//            drawSprite(map->sprites[i]);
     }
 }
 static void drawLineShape(const Line_t *const line) {
@@ -125,16 +129,15 @@ static void drawRay(const Ray_t *const ray) {
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
     float heightWall = (globalConfig.canvasTileHeight /ray->length) * distanceToPP;
-
+    const float tileHeight = globalConfig.canvasTileHeight;
     int32_t pY = screenMiddle - (heightWall / 2);
     Vector2 ptoA = (Vector2){column, pY};
-//    Vector2 ptoB = (Vector2){column, pY + heightWall};
 
     Rectangle source = (Rectangle){0};
     source.x = ray->pixelPos;
     source.y = 0;
     source.width = 1;
-    source.height = globalConfig.canvasTileHeight;
+    source.height = tileHeight;
 
     Rectangle dest = (Rectangle){0};
     dest.x = ptoA.x;
@@ -150,11 +153,9 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
         0.0f,
         RAYWHITE
     );
-
-//    DrawLineV(ptoA, ptoB, GRAY);
 }
 static void drawBackground(void) {
-    const int32_t posY = globalConfig.canvasHeight / 2;
+    const int32_t posY = screenMiddle;
     DrawRectangle(0, 0, globalConfig.canvasWidth, posY, DARKGRAY);
     DrawRectangle(0, posY, globalConfig.canvasWidth, posY, BROWN);
 }
@@ -207,4 +208,7 @@ static void drawSprite(Sprite_t *const sprite) {
             );
         }
     }
+}
+static void drawCeiling(const Player_t *const player) {
+    //TODO
 }
