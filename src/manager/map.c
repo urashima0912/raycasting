@@ -27,12 +27,12 @@ const uint8_t level0[L0_ROW][L0_COLUMN] = {
 static const char *TILE_SRC = "assets/sprites/tiles.png";
 
 //------------------------------------------------------------------------------------
-// Private methods declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static Tile_t **loadTiles(LevelType_t levelType, Vector2 size);
 
 //------------------------------------------------------------------------------------
-// Public methods implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 Map_t *initMap(LevelType_t levelType) {
     Map_t *map = malloc(sizeof(Map_t));
@@ -72,7 +72,7 @@ void freeMap(Map_t **ptrMap) {
 }
 
 //------------------------------------------------------------------------------------
-// Private methods implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static Tile_t **loadTiles(LevelType_t levelType, Vector2 size) {
     Tile_t **tiles = NULL;

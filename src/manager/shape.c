@@ -4,13 +4,13 @@
 #define COLOR_BASE RED
 
 //------------------------------------------------------------------------------------
-// Private methods declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 void   *loadShape(ShapeType_t type);
 Line_t *loadLineShape(void);
 
 //------------------------------------------------------------------------------------
-// Public methods implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 Shape_t initShape(ShapeType_t type) {
     Shape_t shape = (Shape_t){0};
@@ -26,7 +26,7 @@ void freeShape(Shape_t *ptrShape) {
 }
 
 //------------------------------------------------------------------------------------
-// Private methods implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 void *loadShape(ShapeType_t type) {
     switch (type) {

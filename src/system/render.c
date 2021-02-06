@@ -15,7 +15,7 @@ static float distanceToPP = 0.0f;
 static int32_t screenMiddle = 0;
 
 //------------------------------------------------------------------------------------
-// Private methods declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static void drawObject(const Object_t *const obj);
 static void drawMap(const Map_t *const map);
@@ -29,7 +29,7 @@ static void drawSprite(Sprite_t *const sprite);
 static void drawCeiling(const Player_t *const player);
 
 //------------------------------------------------------------------------------------
-// Public methods declaration.
+// Public functions declaration.
 //------------------------------------------------------------------------------------
 void initRender(void) {
     InitWindow(
@@ -55,7 +55,7 @@ void updateRender(void) {
 }
 
 //------------------------------------------------------------------------------------
-// Private methods implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static void drawObject(const Object_t *const obj) {
     switch (obj->type) {

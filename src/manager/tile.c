@@ -2,12 +2,12 @@
 #include <raylib.h>
 
 //------------------------------------------------------------------------------------
-// Private methods declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static Color getColorTile(TileType_t type);
 
 //------------------------------------------------------------------------------------
-// Public methods implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 Tile_t  initTile(Vector2 position, Vector2 size, TileType_t type) {
     Tile_t tile = {0};
@@ -19,7 +19,7 @@ Tile_t  initTile(Vector2 position, Vector2 size, TileType_t type) {
 }
 
 //------------------------------------------------------------------------------------
-// Private methods implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static Color getColorTile(TileType_t type) {
     switch (type) {

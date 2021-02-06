@@ -3,13 +3,13 @@
 #include <stdlib.h>
 
 //------------------------------------------------------------------------------------
-// Private methods declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static void initPlayerData(Player_t *const player, Vector2 position);
 static void initPlayerRays(Player_t *const player);
 
 //------------------------------------------------------------------------------------
-// Public methods implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 Player_t *initPlayer(Vector2 position) {
     Player_t *player = malloc(sizeof(Player_t));
@@ -27,7 +27,7 @@ void freePlayer(Player_t **ptrPlayer) {
 }
 
 //------------------------------------------------------------------------------------
-// Private methods implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static void initPlayerData(Player_t *const player, Vector2 position) {
     player->position = position;
