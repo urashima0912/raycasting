@@ -26,6 +26,16 @@ void initGlobalConfig(void) {
     globalConfig.FOV = 60.0f;
     globalConfig.middleFOV = globalConfig.FOV / 2.0f;
     globalConfig.viewMap = false;
+
+    // init camera data.
+    globalCamera = (Camera2D){0};
+    globalCamera.target = (Vector2){0};
+    globalCamera.zoom = 1.0f;
+    globalCamera.rotation = 0.0f;
+    globalCamera.offset = (Vector2){
+        globalConfig.canvasWidth/2,
+        globalConfig.canvasHeight/2
+    };
 }
 void initGlobalZBuffer(void) {
     const int32_t nRays = globalConfig.canvasWidth;

@@ -34,6 +34,7 @@ typedef struct gConfig_t {
 
 gConfig_t   globalConfig;
 float       *globalZBuffer;
+Camera2D    globalCamera;
 
 void        initGlobalConfig(void);
 void        initGlobalZBuffer(void);

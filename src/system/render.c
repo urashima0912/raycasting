@@ -49,8 +49,14 @@ void initRender(void) {
 }
 void updateRender(void) {
     BeginDrawing();
-    ClearBackground(BLANK);
-    drawAllObject(&drawObject);
+    ClearBackground(BLUE);
+    if (globalConfig.viewMap) {
+        BeginMode2D(globalCamera);
+        drawAllObject(&drawObject);
+        EndMode2D();
+    } else {
+        drawAllObject(&drawObject);
+    }
     EndDrawing();
 }
 
@@ -95,7 +101,7 @@ static void drawPlayer(const Player_t *const player) {
             player->position.y - 3,
             6,
             6,
-            RAYWHITE
+            RED
         );
 
         for (int i=0; i < nRays; ++i)

@@ -24,8 +24,7 @@ Tile_t  initTile(Vector2 position, Vector2 size, TileType_t type) {
 static Color getColorTile(TileType_t type) {
     switch (type) {
         case TILE_FLOOR:
-            return GRAY;
-            break;
+            return BLACK;
         default:
             return DARKGRAY;
     }

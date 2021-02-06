@@ -60,8 +60,15 @@ static void updatePlayerPhysic(Player_t *player) {
     Vector2 ptoB = addVectorGlobal(player->position, auxVec);
 
     updateLineShapePhysic(line, player->position, ptoB);
-    if (!isCollisionVectorMapPhysic(newPosition))
+    if (!isCollisionVectorMapPhysic(newPosition)) {
         player->position = newPosition;
+        if (globalConfig.viewMap) {
+            globalCamera.target = (Vector2){
+                player->position.x + 50, //TODO: check it.
+                player->position.y + globalConfig.screeHeight/4,
+            };
+        }
+    }
 
     player->angle = angle;
     updateRaysPlayer(player);
