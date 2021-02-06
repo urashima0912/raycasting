@@ -31,6 +31,9 @@ typedef struct gConfig_t {
     float middleFOV;
     bool viewMap;
     bool viewFPS;
+
+    Texture wallsTextures;
+    Texture floorsTextures;
 }gConfig_t;
 
 gConfig_t   globalConfig;
@@ -40,6 +43,7 @@ Camera2D    globalCamera;
 void        initGlobalConfig(void);
 void        initGlobalZBuffer(void);
 void        freeGlobalZBuffer(void);
+void        freeGlobalResources(void);
 void        printVectorGlobal(Vector2 v);
 void        sortArrayGlobal(int32_t *array, int32_t size);
 float       lengthVectorGlobal(Vector2 v);
@@ -49,6 +53,7 @@ bool        isLookUp(const float angle);
 bool        isPositionInsideMap(const Vector2 v);
 bool        isLookLeft(const float angle);
 bool        areEqualV(const Vector2 v1, const Vector2 v2);
+bool        loadGlobalResources(void);
 Vector2     normalizedVectorGlobal(Vector2 v);
 Vector2     addVectorGlobal(Vector2 v1, Vector2 v2);
 Vector2     multVectorGlobal(Vector2 v, float value);

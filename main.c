@@ -9,12 +9,14 @@ int main(void) {
     initGlobalConfig();
     initGlobalZBuffer();
     initRender();
+    loadGlobalResources();
     initStoreObject();
     while (!WindowShouldClose()) {
         updatePhysic();
         updateEvent();
         updateRender();
     }
+    freeGlobalResources();
     freeStoreObject();
     freeGlobalZBuffer();
     CloseWindow();

@@ -13,14 +13,17 @@ static void     swap(int32_t *a, int32_t *b);
 // Public method implementation.
 //------------------------------------------------------------------------------------
 void initGlobalConfig(void) {
-    globalConfig.screeWidth = 640;
-    globalConfig.screeHeight = 480;
+    globalConfig.screeWidth = 800;
+    globalConfig.screeHeight = 600;
     globalConfig.screenTitle = "Dungeon alpha";
-    globalConfig.canvasTileWidth = 48;
-    globalConfig.canvasTileHeight = 48;
+    globalConfig.canvasTileWidth = 32;
+    globalConfig.canvasTileHeight = 32;
 
-    globalConfig.canvasWidth = L0_COLUMN * globalConfig.canvasTileWidth;
-    globalConfig.canvasHeight = L0_ROW * globalConfig.canvasTileHeight;
+//    globalConfig.canvasWidth = L0_COLUMN * globalConfig.canvasTileWidth;
+//    globalConfig.canvasHeight = L0_ROW * globalConfig.canvasTileHeight;
+
+    globalConfig.canvasWidth = 800;
+    globalConfig.canvasHeight = 600;
 
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;
@@ -147,5 +150,12 @@ static int32_t getMiddleIndex(int32_t *array, int32_t low, int32_t high) {
     swap(&array[index + 1], &array[high]);
     return (index + 1);
 }
-
-
+bool loadGlobalResources(void) {
+    globalConfig.wallsTextures = LoadTexture("assets/sprites/walls.png");
+    globalConfig.floorsTextures = LoadTexture("assets/sprites/floors.png");
+    return true;
+}
+void freeGlobalResources(void) {
+    UnloadTexture(globalConfig.wallsTextures);
+    UnloadTexture(globalConfig.floorsTextures);
+}

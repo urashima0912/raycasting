@@ -30,7 +30,6 @@ typedef enum LevelType_t {
 typedef struct Map_t {
     LevelType_t type;
     Vector2 size;
-    Texture texture;
     Tile_t **walls;
     Sprite_t *sprites[NUM_SPRITES];
 } Map_t;

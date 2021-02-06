@@ -43,8 +43,6 @@ const FloorType_t FLOORS_LEVEL_0[L0_ROW][L0_COLUMN] = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
 
-static const char *TILE_SRC = "assets/sprites/tiles.png";
-
 //------------------------------------------------------------------------------------
 // Private functions declaration.
 //------------------------------------------------------------------------------------
@@ -58,7 +56,6 @@ Map_t *initMap(LevelType_t levelType) {
     map->type = levelType;
     map->size = (Vector2){ L0_COLUMN, L0_ROW };
     map->walls = loadTiles(levelType, map->size);
-    map->texture = LoadTexture(TILE_SRC);
 
     //TODO: change initSprite.
     map->sprites[0] = initSprite();
@@ -71,7 +68,7 @@ bool isCollisionWallMap(const Map_t *const map, Vector2 position) {
     const int posX = position.x / tileWidth;
     const int posY = position.y / tileHeight;
 
-    return WALLS_LEVEL_0[posY][posX] != TILE_FLOOR;
+    return WALLS_LEVEL_0[posY][posX] != WALL_EMPTY;
 }
 void freeMap(Map_t **ptrMap) {
     if (*ptrMap != NULL) {
@@ -84,7 +81,6 @@ void freeMap(Map_t **ptrMap) {
             (*ptrMap)->walls = NULL;
         }
         freeSprite(&((*ptrMap)->sprites[0]));
-        UnloadTexture((*ptrMap)->texture);
         free((*ptrMap));
         (*ptrMap) = NULL;
     }

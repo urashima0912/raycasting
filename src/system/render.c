@@ -154,7 +154,7 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
     dest.height = heightWall;
 
     DrawTexturePro(
-        map->texture,
+        globalConfig.wallsTextures,
         source,
         dest,
         (Vector2){0, 0},
