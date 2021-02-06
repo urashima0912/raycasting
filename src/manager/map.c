@@ -5,7 +5,7 @@
 //------------------------------------------------------------------------------------
 // Constants declaration.
 //------------------------------------------------------------------------------------
-const uint8_t level0[L0_ROW][L0_COLUMN] = {
+const WallType_t WALLS_LEVEL_0[L0_ROW][L0_COLUMN] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -22,6 +22,25 @@ const uint8_t level0[L0_ROW][L0_COLUMN] = {
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+};
+
+const FloorType_t FLOORS_LEVEL_0[L0_ROW][L0_COLUMN] = {
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
 
 static const char *TILE_SRC = "assets/sprites/tiles.png";
@@ -45,14 +64,14 @@ Map_t *initMap(LevelType_t levelType) {
     map->sprites[0] = initSprite();
     return map;
 }
-bool isCollisionMap(const Map_t *const map, Vector2 position) {
+bool isCollisionWallMap(const Map_t *const map, Vector2 position) {
     const float tileWidth =  map->walls[0]->size.x;
     const float tileHeight =  map->walls[0]->size.y;
 
     const int posX = position.x / tileWidth;
     const int posY = position.y / tileHeight;
 
-    return level0[posY][posX] != TILE_FLOOR;
+    return WALLS_LEVEL_0[posY][posX] != TILE_FLOOR;
 }
 void freeMap(Map_t **ptrMap) {
     if (*ptrMap != NULL) {
@@ -85,7 +104,7 @@ static Tile_t **loadTiles(LevelType_t levelType, Vector2 size) {
         tiles[row] = malloc(sizeof(Tile_t) * size.x);
         for (int column=0; column < size.x; ++column) {
             const Vector2 tilePos = (Vector2){ column * tileWidth, row *tileHeight };
-            const TileType_t type =  level0[row][column];
+            const TileType_t type =  WALLS_LEVEL_0[row][column];
             tiles[row][column] = initTile(tilePos, tileSize, type);
         }
     }

@@ -79,7 +79,7 @@ static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB
 }
 static bool isCollisionVectorMapPhysic(Vector2 position) {
     const Map_t *const map = (Map_t *)storeObject[OBJ_MAP].obj;
-    return isCollisionMap(map, position);
+    return isCollisionWallMap(map, position);
 }
 static void updateRaysPlayer(Player_t *const player) {
     const int32_t nRays = globalConfig.canvasNumRays;
