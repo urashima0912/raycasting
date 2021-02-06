@@ -46,7 +46,7 @@ const FloorType_t FLOORS_LEVEL_0[L0_ROW][L0_COLUMN] = {
 //------------------------------------------------------------------------------------
 // Private functions declaration.
 //------------------------------------------------------------------------------------
-static Tile_t **loadTiles(LevelType_t levelType, Vector2 size);
+static Tile_t **loadTiles(LevelType_t levelType, Vector2 size, TileType_t type);
 
 //------------------------------------------------------------------------------------
 // Public functions implementation.
@@ -55,7 +55,7 @@ Map_t *initMap(LevelType_t levelType) {
     Map_t *map = malloc(sizeof(Map_t));
     map->type = levelType;
     map->size = (Vector2){ L0_COLUMN, L0_ROW };
-    map->walls = loadTiles(levelType, map->size);
+    map->walls = loadTiles(levelType, map->size, TILE_WALL);
 
     //TODO: change initSprite.
     map->sprites[0] = initSprite();
@@ -89,7 +89,7 @@ void freeMap(Map_t **ptrMap) {
 //------------------------------------------------------------------------------------
 // Private functions implementation.
 //------------------------------------------------------------------------------------
-static Tile_t **loadTiles(LevelType_t levelType, Vector2 size) {
+static Tile_t **loadTiles(LevelType_t levelType, Vector2 size, TileType_t type) {
     Tile_t **tiles = NULL;
     const int32_t tileWidth = globalConfig.canvasTileWidth;
     const int32_t tileHeight = globalConfig.canvasTileHeight;
@@ -100,8 +100,8 @@ static Tile_t **loadTiles(LevelType_t levelType, Vector2 size) {
         tiles[row] = malloc(sizeof(Tile_t) * size.x);
         for (int column=0; column < size.x; ++column) {
             const Vector2 tilePos = (Vector2){ column * tileWidth, row *tileHeight };
-            const TileType_t type =  WALLS_LEVEL_0[row][column];
-            tiles[row][column] = initTile(tilePos, tileSize, type);
+            const WallType_t number =  WALLS_LEVEL_0[row][column];
+            tiles[row][column] = initTile(tilePos, tileSize, type, number);
         }
     }
     return tiles;

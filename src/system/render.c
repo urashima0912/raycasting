@@ -28,6 +28,9 @@ static void drawBackground(void);
 static void drawSprite(Sprite_t *const sprite);
 static void drawCeiling(const Player_t *const player);
 static void drawFPS(void);
+static void drawWallTile(const Tile_t *const tile);
+static void drawFloorTile(const Tile_t *const tile);
+static void drawCeilingTile(const Tile_t *const tile);
 
 //------------------------------------------------------------------------------------
 // Public functions declaration.
@@ -87,13 +90,34 @@ static void drawMap(const Map_t *const map) {
     }
 }
 static void drawTile(const Tile_t *const tile) {
-    DrawRectangle(
-        tile->position.x,
-        tile->position.y,
-        tile->size.x,
-        tile->size.y,
-        tile->color
-    );
+    switch (tile->type) {
+        case TILE_WALL:
+            drawWallTile(tile);
+            break;
+        case TILE_FLOOR:
+            drawFloorTile(tile);
+            break;
+        case TILE_CEILING:
+            drawCeilingTile(tile);
+            break;
+    }
+
+}
+static void drawWallTile(const Tile_t *const tile) {
+    if (tile->number) {
+        DrawTexture(
+            globalConfig.wallsTextures,
+            tile->position.x,
+            tile->position.y,
+            RAYWHITE
+        );
+    }
+}
+static void drawFloorTile(const Tile_t *const tile) {
+    //TODO
+}
+static void drawCeilingTile(const Tile_t *const tile) {
+    //TODO
 }
 static void drawPlayer(const Player_t *const player) {
     const int32_t nRays = globalConfig.canvasNumRays;
