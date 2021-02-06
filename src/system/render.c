@@ -79,7 +79,7 @@ static void drawMap(const Map_t *const map) {
     const int nColumn = map->size.x;
     for (int row=0; row < nRow; ++row) {
         for (int column=0; column < nColumn; ++column) {
-            Tile_t tile = map->tiles[row][column];
+            Tile_t tile = map->walls[row][column];
             drawTile(&tile);
         }
     }

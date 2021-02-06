@@ -38,7 +38,7 @@ Map_t *initMap(LevelType_t levelType) {
     Map_t *map = malloc(sizeof(Map_t));
     map->type = levelType;
     map->size = (Vector2){ L0_COLUMN, L0_ROW };
-    map->tiles = loadTiles(levelType, map->size);
+    map->walls = loadTiles(levelType, map->size);
     map->texture = LoadTexture(TILE_SRC);
 
     //TODO: change initSprite.
@@ -46,8 +46,8 @@ Map_t *initMap(LevelType_t levelType) {
     return map;
 }
 bool isCollisionMap(const Map_t *const map, Vector2 position) {
-    const float tileWidth =  map->tiles[0]->size.x;
-    const float tileHeight =  map->tiles[0]->size.y;
+    const float tileWidth =  map->walls[0]->size.x;
+    const float tileHeight =  map->walls[0]->size.y;
 
     const int posX = position.x / tileWidth;
     const int posY = position.y / tileHeight;
@@ -56,13 +56,13 @@ bool isCollisionMap(const Map_t *const map, Vector2 position) {
 }
 void freeMap(Map_t **ptrMap) {
     if (*ptrMap != NULL) {
-        if ((*ptrMap)->tiles) {
+        if ((*ptrMap)->walls) {
             for (int row=0; row < (*ptrMap)->size.y; ++row) {
-                free((*ptrMap)->tiles[row]);
-                (*ptrMap)->tiles[row] = NULL;
+                free((*ptrMap)->walls[row]);
+                (*ptrMap)->walls[row] = NULL;
             }
-            free((*ptrMap)->tiles);
-            (*ptrMap)->tiles = NULL;
+            free((*ptrMap)->walls);
+            (*ptrMap)->walls = NULL;
         }
         freeSprite(&((*ptrMap)->sprites[0]));
         UnloadTexture((*ptrMap)->texture);
