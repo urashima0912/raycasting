@@ -27,6 +27,7 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
 static void drawBackground(void);
 static void drawSprite(Sprite_t *const sprite);
 static void drawCeiling(const Player_t *const player);
+static void drawFPS(void);
 
 //------------------------------------------------------------------------------------
 // Public functions declaration.
@@ -57,6 +58,7 @@ void updateRender(void) {
     } else {
         drawAllObject(&drawObject);
     }
+    drawFPS();
     EndDrawing();
 }
 
@@ -213,6 +215,11 @@ static void drawSprite(Sprite_t *const sprite) {
                 RAYWHITE
             );
         }
+    }
+}
+static void drawFPS(void) {
+    if (globalConfig.viewFPS) {
+        DrawFPS(10, 10);
     }
 }
 static void drawCeiling(const Player_t *const player) {

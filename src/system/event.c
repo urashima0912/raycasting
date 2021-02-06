@@ -45,6 +45,9 @@ static void getEventPlayer(Player_t *player) {
 
     if (IsKeyPressed(KEY_F1))
         globalConfig.viewMap = !globalConfig.viewMap;
+
+    if (IsKeyPressed(KEY_F2))
+        globalConfig.viewFPS = !globalConfig.viewFPS;
 }
 
 

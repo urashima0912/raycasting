@@ -30,6 +30,7 @@ typedef struct gConfig_t {
     float FOV;
     float middleFOV;
     bool viewMap;
+    bool viewFPS;
 }gConfig_t;
 
 gConfig_t   globalConfig;

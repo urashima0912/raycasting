@@ -25,8 +25,9 @@ void initGlobalConfig(void) {
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;
     globalConfig.middleFOV = globalConfig.FOV / 2.0f;
-    globalConfig.viewMap = false;
 
+    globalConfig.viewMap = false;
+    globalConfig.viewFPS = false;
     // init camera data.
     globalCamera = (Camera2D){0};
     globalCamera.target = (Vector2){0};
