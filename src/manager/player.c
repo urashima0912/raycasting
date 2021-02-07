@@ -32,7 +32,7 @@ void freePlayer(Player_t **ptrPlayer) {
 static void initPlayerData(Player_t *const player, Vector2 position) {
     player->position = position;
     player->shapeLine = initShape(SHAPE_LINE);
-    player->angle = 0;
+    player->angle = PI/2;
     player->angleVel = 0;
     player->velocity = (Vector2){0};
     player->posZ = globalConfig.canvasHeight >> 1;
@@ -45,7 +45,7 @@ static void initPlayerRays(Player_t *const player) {
         player->rays[i].ptoA = player->position;
         player->rays[i].ptoB = (Vector2){0};
         player->rays[i].angle = 0.0f;
-        player->rays[i].angle = 0.0f;
+        player->rays[i].angle = 00.0f;
         player->rays[i].color = RAY_COLOR_BASE;
         player->rays[i].wallType = 0;
     }

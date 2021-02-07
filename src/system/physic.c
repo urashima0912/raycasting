@@ -124,15 +124,10 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
     globalZBuffer[column] = ray->length;
 
     // get wall type.
-    const uint32_t x = (ray->ptoB.x - (isLookLeft(ray->angle) ? tileWidth : 0))/tileWidth;
-    const uint32_t y = (ray->ptoB.y - (isLookUp(ray->angle) ? tileHeight : 0))/tileHeight;
-
-//    uint32_t x = ray->ptoB.x/tileWidth;
-//    uint32_t y = ray->ptoB.y/tileHeight;
-//    TraceLog(LOG_INFO, TextFormat("x: %d, y: %d", x, y));
+    uint32_t x = (ray->ptoB.x - (isLookLeft(ray->angle) ? 1 : 0))/tileWidth;
+    uint32_t y = (ray->ptoB.y - (isLookUp(ray->angle) ? 1 : 0))/tileHeight;
 
     ray->wallType = getWallTypeMap(x, y);
-//    TraceLog(LOG_INFO, TextFormat("%d", ray->wallType));
 }
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
