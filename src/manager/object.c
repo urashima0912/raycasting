@@ -11,7 +11,7 @@ void initStoreObject(void) {
     storeObject[OBJ_MAP].type = OBJ_MAP;
     storeObject[OBJ_MAP].obj = (Map_t *)initMap(LEVEL_0);
     // Load Player.
-    const Vector2 playerPos = (Vector2){100, 100};
+    const Vector2 playerPos = (Vector2){50, 100};
     storeObject[OBJ_PLAYER].type = OBJ_PLAYER;
     storeObject[OBJ_PLAYER].obj = (Player_t *)initPlayer(playerPos);
 }
