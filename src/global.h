@@ -34,6 +34,10 @@ typedef struct gConfig_t {
 
     Texture wallsTextures;
     Texture floorsTextures;
+
+    // player information
+    const Vector2 *playerPosition;
+    const float *playerAngle;
 }gConfig_t;
 
 gConfig_t   globalConfig;

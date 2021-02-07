@@ -39,6 +39,7 @@ static void getEventObject(Object_t *const obj) {
 }
 static void getEventPlayer(Player_t *player) {
     player->velocity = (Vector2){0};
+    player->angleVel = 0;
 
     if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
         player->velocity.y = 2;
@@ -57,14 +58,12 @@ static void getEventPlayer(Player_t *player) {
 
     int32_t  currentMouseX = GetMouseX();
     const int32_t diff = 40;
-    if (currentMouseX < (prevMouseX - diff)) {
-        player->angleVel = -0.05;
+    if (currentMouseX < (prevMouseX - diff) || IsKeyDown(KEY_Q)) {
+        player->angleVel = -0.045;
         prevMouseX = currentMouseX;
-    } else if (currentMouseX > (prevMouseX + diff)) {
-        player->angleVel = 0.05;
+    } else if (currentMouseX > (prevMouseX + diff) || IsKeyDown(KEY_E)) {
+        player->angleVel = 0.045;
         prevMouseX = currentMouseX;
-    } else {
-        player->angleVel = 0;
     }
 
     // Show info map.

@@ -71,6 +71,8 @@ static void updatePlayerPhysic(Player_t *player) {
     }
 
     player->angle = angle;
+    globalConfig.playerAngle = &player->angle;
+    globalConfig.playerPosition = &player->position;
     updateRaysPlayer(player);
 }
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB) {

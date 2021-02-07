@@ -30,7 +30,7 @@ void initGlobalConfig(void) {
     globalConfig.middleFOV = globalConfig.FOV / 2.0f;
 
     globalConfig.viewMap = false;
-    globalConfig.viewFPS = false;
+    globalConfig.viewFPS = true; //TODO: default false.
     // init camera data.
     globalCamera = (Camera2D){0};
     globalCamera.target = (Vector2){0};
@@ -40,6 +40,9 @@ void initGlobalConfig(void) {
         globalConfig.canvasWidth/2,
         globalConfig.canvasHeight/2
     };
+
+    globalConfig.playerAngle = NULL;
+    globalConfig.playerPosition = NULL;
 }
 void initGlobalZBuffer(void) {
     const int32_t nRays = globalConfig.canvasWidth;

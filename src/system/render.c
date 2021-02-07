@@ -31,6 +31,7 @@ static void drawFPS(void);
 static void drawWallTile(const Tile_t *const tile);
 static void drawFloorTile(const Tile_t *const tile);
 static void drawCeilingTile(const Tile_t *const tile);
+static void drawPlayerInfo(void);
 
 //------------------------------------------------------------------------------------
 // Public functions declaration.
@@ -63,6 +64,7 @@ void updateRender(void) {
         drawAllObject(&drawObject);
     }
     drawFPS();
+    drawPlayerInfo();
     EndDrawing();
 }
 
@@ -260,4 +262,30 @@ static void drawFPS(void) {
 }
 static void drawCeiling(const Player_t *const player) {
     //TODO
+}
+static void drawPlayerInfo(void) {
+    if (!globalConfig.playerAngle || !globalConfig.playerPosition) {
+        return;
+    }
+
+    const float playerAngle = *(globalConfig.playerAngle);
+    const Vector2 playerPosition = *(globalConfig.playerPosition);
+
+    if (globalConfig.viewFPS) {
+        const int32_t  posX = playerPosition.x;
+        const int32_t  posY = playerPosition.y;
+        const int32_t fontSize = 20;
+        const int32_t angle = playerAngle * RAD2DEG;
+        const int32_t column = playerPosition.x/globalConfig.canvasTileWidth;
+        const int32_t row = playerPosition.y/globalConfig.canvasTileHeight;
+        const char *textPosition = TextFormat("x: %d, y: %d: ", posX, posY);
+        const char *textTilePosition = TextFormat("r: %d, c: %d: ", row, column);
+        const char *textAngle = TextFormat("angle: %d", angle);
+        const Color color = RAYWHITE;
+        const int32_t space = 24;
+        const int32_t  diff = 10;
+        DrawText(textPosition, 10, space + diff, fontSize, color);
+        DrawText(textTilePosition, 10, space * 2 + diff, fontSize, color);
+        DrawText(textAngle, 10, space * 3 + diff, fontSize, color);
+    }
 }
