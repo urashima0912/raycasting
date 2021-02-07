@@ -17,6 +17,7 @@ typedef struct Ray_t {
     float length;
     float pixelPos;
     Color color;
+    uint32_t wallType;
 } Ray_t;
 
 #ifdef __cplusplus

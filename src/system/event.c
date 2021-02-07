@@ -3,6 +3,12 @@
 #include "../manager/player.h"
 #include "../global.h"
 
+
+//------------------------------------------------------------------------------------
+// Constants and variables declaration.
+//------------------------------------------------------------------------------------
+static int32_t prevMouseX = 0;
+
 //------------------------------------------------------------------------------------
 // Private method declaration.
 //------------------------------------------------------------------------------------
@@ -12,6 +18,9 @@ static void getEventPlayer(Player_t *player);
 //------------------------------------------------------------------------------------
 // Public method implementation.
 //------------------------------------------------------------------------------------
+void initEvent(void) {
+    prevMouseX = GetMouseX();
+}
 void updateEvent(void) {
     updateAllObject(&getEventObject);
 }
@@ -29,23 +38,38 @@ static void getEventObject(Object_t *const obj) {
     }
 }
 static void getEventPlayer(Player_t *player) {
-    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP))
+    player->velocity = (Vector2){0};
+
+    if (IsKeyDown(KEY_W) || IsKeyDown(KEY_UP)) {
         player->velocity.y = 2;
-    else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN))
+    }
+    else if (IsKeyDown(KEY_S) || IsKeyDown(KEY_DOWN)) {
         player->velocity.y = -2;
-    else
-        player->velocity.y = 0;
+    }
+    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
+        player->velocity.x = -PI/2;
+        player->velocity.y = 2;
+    }
+    else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+        player->velocity.x = PI/2;
+        player->velocity.y = 2;
+    }
 
-    if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
+    int32_t  currentMouseX = GetMouseX();
+    const int32_t diff = 40;
+    if (currentMouseX < (prevMouseX - diff)) {
         player->angleVel = -0.05;
-    else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT))
+        prevMouseX = currentMouseX;
+    } else if (currentMouseX > (prevMouseX + diff)) {
         player->angleVel = 0.05;
-    else
+        prevMouseX = currentMouseX;
+    } else {
         player->angleVel = 0;
+    }
 
+    // Show info map.
     if (IsKeyPressed(KEY_F1))
         globalConfig.viewMap = !globalConfig.viewMap;
-
     if (IsKeyPressed(KEY_F2))
         globalConfig.viewFPS = !globalConfig.viewFPS;
 }

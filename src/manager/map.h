@@ -16,6 +16,10 @@ extern "C" {
 typedef enum WallType_t {
     WALL_EMPTY = 0,
     WALL_1,
+    WALL_2,
+    WALL_3,
+    WALL_4,
+    WALL_5,
 }WallType_t;
 
 typedef enum FloorType_t {
@@ -37,6 +41,7 @@ typedef struct Map_t {
 Map_t *initMap(LevelType_t levelType);
 bool isCollisionWallMap(const Map_t *const map, Vector2 position);
 void freeMap(Map_t **ptrMap);
+uint32_t getWallTypeMap(uint32_t x, uint32_t y);
 
 #ifdef __cplusplus
 }

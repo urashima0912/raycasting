@@ -47,8 +47,8 @@ static void updateObject(Object_t *const obj) {
 static void updatePlayerPhysic(Player_t *player) {
     Line_t *const line = player->shapeLine.ptr;
     const float angle = getAngleGlobal(player->angle, player->angleVel);
-    const float angleCos = cos(angle);
-    const float angleSin = sin(angle);
+    const float angleCos = cosf(angle + player->velocity.x);
+    const float angleSin = sinf(angle + player->velocity.x);
     const Vector2 direction = (Vector2){ angleCos, angleSin };
 
     Vector2 newPosition = player->position;
@@ -104,37 +104,33 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
     ray->ptoB = addVectorGlobal(ray->ptoA, vecTmp);
     ray->length = getSmallLengthV(vecH, vecV);
 
+    const int32_t tileWidth = globalConfig.canvasTileWidth;
+    const int32_t tileHeight = globalConfig.canvasTileHeight;
+
     if (isHorizontalCollision) {
-        const int32_t tileWidth = globalConfig.canvasTileWidth;
         const int32_t diff = (int32_t)(ray->ptoB.x/tileWidth) * tileWidth;
         ray->pixelPos = ray->ptoB.x - diff;
     }
     else {
-        const int32_t tileHeight = globalConfig.canvasTileHeight;
         const int32_t diff = (int32_t)(ray->ptoB.y/tileHeight) * tileHeight;
         ray->pixelPos = ray->ptoB.y - diff;
     }
-
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
-    //it store all rays distance.
+
+    // it store all rays distance.
     globalZBuffer[column] = ray->length;
-}
-static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
-    const float pX = sprite->position.x - player->position.x;
-    const float pY = sprite->position.y - player->position.y;
 
-    sprite->length = lengthVectorGlobal((Vector2){pX, pY});
+    // get wall type.
+    const uint32_t x = (ray->ptoB.x - (isLookLeft(ray->angle) ? tileWidth : 0))/tileWidth;
+    const uint32_t y = (ray->ptoB.y - (isLookUp(ray->angle) ? tileHeight : 0))/tileHeight;
 
-    float angle = atan2f(pY, pX);
-    float diffAngle = player->angle - angle;
-    if (diffAngle < -PI) diffAngle += 2 * PI;
-    else if (diffAngle > PI) diffAngle -= 2 * PI;
+//    uint32_t x = ray->ptoB.x/tileWidth;
+//    uint32_t y = ray->ptoB.y/tileHeight;
+//    TraceLog(LOG_INFO, TextFormat("x: %d, y: %d", x, y));
 
-    diffAngle = fabs(diffAngle);
-    sprite->angle = angle - player->angle; //TODO: check it.
-    const float middleFOV = globalConfig.middleFOV * DEG2RAD;
-    sprite->visible = (diffAngle < middleFOV);
+    ray->wallType = getWallTypeMap(x, y);
+//    TraceLog(LOG_INFO, TextFormat("%d", ray->wallType));
 }
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
@@ -200,4 +196,20 @@ static Vector2 verticalCollision(const Ray_t *const ray) {
     }
 
     return vecTmp;
+}
+static void updateSprite(Sprite_t *const sprite, const Player_t *const player) {
+    const float pX = sprite->position.x - player->position.x;
+    const float pY = sprite->position.y - player->position.y;
+
+    sprite->length = lengthVectorGlobal((Vector2){pX, pY});
+
+    float angle = atan2f(pY, pX);
+    float diffAngle = player->angle - angle;
+    if (diffAngle < -PI) diffAngle += 2 * PI;
+    else if (diffAngle > PI) diffAngle -= 2 * PI;
+
+    diffAngle = fabs(diffAngle);
+    sprite->angle = angle - player->angle; //TODO: check it.
+    const float middleFOV = globalConfig.middleFOV * DEG2RAD;
+    sprite->visible = (diffAngle < middleFOV);
 }

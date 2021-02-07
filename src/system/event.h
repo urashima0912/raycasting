@@ -4,7 +4,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+void initEvent(void);
 void updateEvent(void);
 
 #ifdef __cplusplus

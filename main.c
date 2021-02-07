@@ -9,6 +9,7 @@ int main(void) {
     initGlobalConfig();
     initGlobalZBuffer();
     initRender();
+    initEvent();
     loadGlobalResources();
     initStoreObject();
     while (!WindowShouldClose()) {

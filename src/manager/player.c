@@ -47,6 +47,7 @@ static void initPlayerRays(Player_t *const player) {
         player->rays[i].angle = 0.0f;
         player->rays[i].angle = 0.0f;
         player->rays[i].color = RAY_COLOR_BASE;
+        player->rays[i].wallType = 0;
     }
 }
 

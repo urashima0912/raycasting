@@ -42,6 +42,7 @@ void initRender(void) {
         globalConfig.screenTitle
     );
     HideCursor();
+    DisableCursor();
     SetTargetFPS(SCREEN_FPS);
 
     const int32_t canvasWidth = globalConfig.canvasWidth;
@@ -53,7 +54,7 @@ void initRender(void) {
 }
 void updateRender(void) {
     BeginDrawing();
-    ClearBackground(BLUE);
+    ClearBackground(BLACK);
     if (globalConfig.viewMap) {
         BeginMode2D(globalCamera);
         drawAllObject(&drawObject);
@@ -105,10 +106,18 @@ static void drawTile(const Tile_t *const tile) {
 }
 static void drawWallTile(const Tile_t *const tile) {
     if (tile->number) {
-        DrawTexture(
+        const int32_t width = globalConfig.canvasTileWidth;
+        const int32_t height = globalConfig.canvasTileHeight;
+        Rectangle rec = (Rectangle){
+            (tile->number * width) - width,
+            0,
+            width,
+            height,
+        };
+        DrawTextureRec(
             globalConfig.wallsTextures,
-            tile->position.x,
-            tile->position.y,
+            rec,
+            tile->position,
             RAYWHITE
         );
     }
@@ -160,13 +169,16 @@ static void drawRay(const Ray_t *const ray) {
     );
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
-    float heightWall = (globalConfig.canvasTileHeight /ray->length) * distanceToPP;
-    const float tileHeight = globalConfig.canvasTileHeight;
+    const int32_t tileWidth = globalConfig.canvasTileWidth;
+    const int32_t tileHeight = globalConfig.canvasTileHeight;
+    const float heightWall = (tileHeight /ray->length) * distanceToPP;
     int32_t pY = screenMiddle - (heightWall / 2);
     Vector2 ptoA = (Vector2){column, pY};
 
+    const uint32_t diff = (ray->wallType * tileWidth) - tileWidth;
+
     Rectangle source = (Rectangle){0};
-    source.x = ray->pixelPos;
+    source.x = diff + ray->pixelPos;
     source.y = 0;
     source.width = 1;
     source.height = tileHeight;
@@ -188,8 +200,8 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
 }
 static void drawBackground(void) {
     const int32_t posY = screenMiddle;
-    DrawRectangle(0, 0, globalConfig.canvasWidth, posY, DARKGRAY);
-    DrawRectangle(0, posY, globalConfig.canvasWidth, posY, BROWN);
+    DrawRectangle(0, 0, globalConfig.canvasWidth, posY, BLACK);
+    DrawRectangle(0, posY, globalConfig.canvasWidth, posY, DARKGRAY);
 }
 //TODO:I need check it(problem with sprite render).
 static void drawSprite(Sprite_t *const sprite) {
