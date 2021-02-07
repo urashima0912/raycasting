@@ -64,8 +64,8 @@ static void updatePlayerPhysic(Player_t *player) {
         player->position = newPosition;
         if (globalConfig.viewMap) {
             globalCamera.target = (Vector2){
-                player->position.x + 50, //TODO: check it.
-                player->position.y + globalConfig.screeHeight/4,
+                player->position.x,
+                player->position.y,
             };
         }
     }
@@ -111,11 +111,17 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
 
     if (isHorizontalCollision) {
         const int32_t diff = (int32_t)(ray->ptoB.x/tileWidth) * tileWidth;
-        ray->pixelPos = ray->ptoB.x - diff;
+        ray->pixelPos = (ray->ptoB.x - diff);
+        if (ray->pixelPos > tileWidth - 1) {
+            ray->pixelPos = tileWidth - 1;
+        }
     }
     else {
         const int32_t diff = (int32_t)(ray->ptoB.y/tileHeight) * tileHeight;
-        ray->pixelPos = ray->ptoB.y - diff;
+        ray->pixelPos = (ray->ptoB.y - diff);
+        if (ray->pixelPos > tileHeight - 1) {
+            ray->pixelPos = tileHeight - 1;
+        }
     }
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
@@ -124,9 +130,8 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
     globalZBuffer[column] = ray->length;
 
     // get wall type.
-    uint32_t x = (ray->ptoB.x - (isLookLeft(ray->angle) ? 1 : 0))/tileWidth;
-    uint32_t y = (ray->ptoB.y - (isLookUp(ray->angle) ? 1 : 0))/tileHeight;
-
+    uint32_t x = (ray->ptoB.x + (isLookLeft(ray->angle) ? -0.01 : 0))/tileWidth;
+    uint32_t y = (ray->ptoB.y + (isLookUp(ray->angle) ? -0.01 : 0))/tileHeight;
     ray->wallType = getWallTypeMap(x, y);
 }
 static Vector2 horizontalCollision(const Ray_t *const ray) {

@@ -13,8 +13,8 @@ static void     swap(int32_t *a, int32_t *b);
 // Public method implementation.
 //------------------------------------------------------------------------------------
 void initGlobalConfig(void) {
-    globalConfig.screeWidth = 640;
-    globalConfig.screeHeight = 480;
+    globalConfig.screeWidth = 800;
+    globalConfig.screeHeight = 600;
     globalConfig.screenTitle = "Dungeon alpha";
     globalConfig.canvasTileWidth = 32;
     globalConfig.canvasTileHeight = 32;
@@ -22,8 +22,8 @@ void initGlobalConfig(void) {
 //    globalConfig.canvasWidth = L0_COLUMN * globalConfig.canvasTileWidth;
 //    globalConfig.canvasHeight = L0_ROW * globalConfig.canvasTileHeight;
 
-    globalConfig.canvasWidth = 640;
-    globalConfig.canvasHeight = 480;
+    globalConfig.canvasWidth = 800;
+    globalConfig.canvasHeight = 600;
 
     globalConfig.canvasNumRays = globalConfig.canvasWidth;
     globalConfig.FOV = 60.0f;

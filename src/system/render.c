@@ -171,6 +171,10 @@ static void drawRay(const Ray_t *const ray) {
     );
 }
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column) {
+    if (ray->wallType == WALL_EMPTY) {
+        return;
+    }
+
     const int32_t tileWidth = globalConfig.canvasTileWidth;
     const int32_t tileHeight = globalConfig.canvasTileHeight;
     const float heightWall = (tileHeight /ray->length) * distanceToPP;
@@ -178,9 +182,10 @@ static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t col
     Vector2 ptoA = (Vector2){column, pY};
 
     const uint32_t diff = (ray->wallType * tileWidth) - tileWidth;
+    float pixel = ray->pixelPos;
 
     Rectangle source = (Rectangle){0};
-    source.x = diff + ray->pixelPos;
+    source.x = diff + pixel;
     source.y = 0;
     source.width = 1;
     source.height = tileHeight;

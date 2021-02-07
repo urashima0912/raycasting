@@ -57,12 +57,12 @@ static void getEventPlayer(Player_t *player) {
     }
 
     int32_t  currentMouseX = GetMouseX();
-    const int32_t diff = 40;
+    const int32_t diff = 10;
     if (currentMouseX < (prevMouseX - diff) || IsKeyDown(KEY_Q)) {
-        player->angleVel = -0.045;
+        player->angleVel = -0.030;
         prevMouseX = currentMouseX;
     } else if (currentMouseX > (prevMouseX + diff) || IsKeyDown(KEY_E)) {
-        player->angleVel = 0.045;
+        player->angleVel = 0.030;
         prevMouseX = currentMouseX;
     }
 
