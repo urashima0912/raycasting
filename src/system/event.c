@@ -10,13 +10,13 @@
 static int32_t prevMouseX = 0;
 
 //------------------------------------------------------------------------------------
-// Private method declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static void getEventObject(Object_t *const obj);
 static void getEventPlayer(Player_t *player);
 
 //------------------------------------------------------------------------------------
-// Public method implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 void initEvent(void) {
     prevMouseX = GetMouseX();
@@ -26,7 +26,7 @@ void updateEvent(void) {
 }
 
 //------------------------------------------------------------------------------------
-// Private method implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static void getEventObject(Object_t *const obj) {
     switch (obj->type) {

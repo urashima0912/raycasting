@@ -9,28 +9,28 @@
 #include <stdlib.h>
 
 //------------------------------------------------------------------------------------
-// Private method declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static void updateObject(Object_t *const obj);
 static void updatePlayerPhysic(Player_t *player);
 static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB);
-static bool isCollisionVectorMapPhysic(Vector2 position);
 static void updateRaysPlayer(Player_t *const player);
 static void updateRay(Ray_t *const ray, const float angle, const int32_t column);
 static void updateSprite(Sprite_t *const sprite, const Player_t *const player);
+static bool isCollisionVectorMapPhysic(Vector2 position);
 
 static Vector2 horizontalCollision(const Ray_t *const ray);
 static Vector2 verticalCollision(const Ray_t *const ray);
 
 //------------------------------------------------------------------------------------
-// Public method implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 void updatePhysic(void) {
     updateAllObject(&updateObject);
 }
 
 //------------------------------------------------------------------------------------
-// Private method implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static void updateObject(Object_t *const obj) {
     switch (obj->type) {
@@ -60,7 +60,7 @@ static void updatePlayerPhysic(Player_t *player) {
     Vector2 ptoB = addVectorGlobal(player->position, auxVec);
 
     updateLineShapePhysic(line, player->position, ptoB);
-    if (!isCollisionVectorMapPhysic(newPosition)) {
+    if (isInsideMap(globalConfig.currentLevel, newPosition) && !isCollisionVectorMapPhysic(newPosition)) {
         player->position = newPosition;
         if (globalConfig.viewMap) {
             globalCamera.target = (Vector2){
@@ -132,7 +132,8 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
     // get wall type.
     uint32_t x = (ray->ptoB.x + (isLookLeft(ray->angle) ? -0.01 : 0))/tileWidth;
     uint32_t y = (ray->ptoB.y + (isLookUp(ray->angle) ? -0.01 : 0))/tileHeight;
-    ray->wallType = getWallTypeMap(x, y);
+    LevelType_t levelType = globalConfig.currentLevel;
+    ray->wallType = getWallTypeMap(levelType, x, y);
 }
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
@@ -153,7 +154,8 @@ static Vector2 horizontalCollision(const Ray_t *const ray) {
     if (lookUp)
         vecTmp2.y = -(fabsf(vecTmp.y) + 1);
     ptoA = addVectorGlobal(ptoA, vecTmp2);
-    while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
+    const uint32_t levelType = globalConfig.currentLevel;
+    while (isInsideMap(levelType, ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
         vecTmp2 = (Vector2){0};
         vecTmp2.y = (lookUp) ? -tileWidth: tileWidth;
         vecTmp2.x = vecTmp2.y / tanf(angle);
@@ -186,7 +188,8 @@ static Vector2 verticalCollision(const Ray_t *const ray) {
     if (lookLeft)
         vecTmp2.x = -(fabsf(vecTmp.x) + 1);
     ptoA = addVectorGlobal(ptoA, vecTmp2);
-    while (isPositionInsideMap(ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
+    const uint32_t levelType = globalConfig.currentLevel;
+    while (isInsideMap(levelType, ptoA) && !isCollisionVectorMapPhysic(ptoA)) {
         vecTmp2 = (Vector2){0};
         vecTmp2.x = (lookLeft) ? -tileHeight: tileHeight;
         vecTmp2.y = vecTmp2.x * tanf(angle);

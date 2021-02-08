@@ -6,41 +6,41 @@
 // Constants declaration.
 //------------------------------------------------------------------------------------
 const WallType_t WALLS_LEVEL_0[L0_ROW][L0_COLUMN] = {
-    {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-    {2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2},
-    {2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2},
-    {2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2},
-    {2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2},
-    {2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2},
-    {2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 2},
-    {2, 0, 0, 0, 4, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2},
-    {2, 0, 0, 0, 4, 0, 1, 0, 0, 0, 0, 5, 0, 0, 0, 2},
-    {2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 0, 2},
-    {2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 0, 2},
-    {2, 2, 0, 1, 1, 1, 1, 1, 0, 0, 0, 5, 0, 0, 0, 2},
-    {2, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2},
-    {2, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2},
-    {2, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2},
-    {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
 
 const FloorType_t FLOORS_LEVEL_0[L0_ROW][L0_COLUMN] = {
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 };
 
 //------------------------------------------------------------------------------------
@@ -51,14 +51,18 @@ static Tile_t **loadTiles(LevelType_t levelType, Vector2 size, TileType_t type);
 //------------------------------------------------------------------------------------
 // Public functions implementation.
 //------------------------------------------------------------------------------------
-Map_t *initMap(LevelType_t levelType) {
+Map_t *initMap(LevelType_t type) {
     Map_t *map = malloc(sizeof(Map_t));
-    map->type = levelType;
-    map->size = (Vector2){ L0_COLUMN, L0_ROW };
-    map->walls = loadTiles(levelType, map->size, TILE_WALL);
+    map->type = type;
+    map->size = getLevelSize(type);
+    map->walls = loadTiles(type, map->size, TILE_WALL);
 
     //TODO: change initSprite.
     map->sprites[0] = initSprite();
+
+    // Initialization level global data.
+    globalConfig.currentLevel = type;
+
     return map;
 }
 bool isCollisionWallMap(const Map_t *const map, Vector2 position) {
@@ -68,7 +72,8 @@ bool isCollisionWallMap(const Map_t *const map, Vector2 position) {
     const int posX = position.x / tileWidth;
     const int posY = position.y / tileHeight;
 
-    return WALLS_LEVEL_0[posY][posX] != WALL_EMPTY;
+    uint32_t wallType = getWallTypeMap(map->type, posX, posY);
+    return wallType != WALL_EMPTY;
 }
 void freeMap(Map_t **ptrMap) {
     if (*ptrMap != NULL) {
@@ -85,9 +90,36 @@ void freeMap(Map_t **ptrMap) {
         (*ptrMap) = NULL;
     }
 }
-//TODO: refactor it.
-uint32_t getWallTypeMap(uint32_t x, uint32_t y) {
-    return WALLS_LEVEL_0[y][x];
+uint32_t getWallTypeMap(LevelType_t type, uint32_t x, uint32_t y) {
+    switch (type) {
+        case LEVEL_0:
+            return WALLS_LEVEL_0[y][x];
+        default:
+            return -1;
+    }
+}
+Vector2 getLevelSize(LevelType_t type) {
+    switch (type) {
+        case LEVEL_0:
+            return (Vector2){L0_COLUMN, L0_ROW};
+        default:
+            return (Vector2){0};
+    }
+}
+Vector2 getLevelSizeEx(LevelType_t type) {
+    const Vector2 size = getLevelSize(type);
+    return (Vector2){
+      size.x * globalConfig.canvasTileWidth,
+      size.y * globalConfig.canvasTileHeight
+    };
+}
+bool isInsideMap(LevelType_t type, Vector2 position) {
+    const Vector2 sizeMap = getLevelSizeEx(type);
+    const int32_t tileHeight = globalConfig.canvasTileHeight;
+    const bool insideMapX = position.x > 0 && position.x < sizeMap.x;
+    const bool insideMapY = position.y > 0 && position.y < sizeMap.y - tileHeight;
+
+    return insideMapX && insideMapY;
 }
 
 

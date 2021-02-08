@@ -40,8 +40,11 @@ typedef struct Map_t {
 
 Map_t *initMap(LevelType_t levelType);
 bool isCollisionWallMap(const Map_t *const map, Vector2 position);
+bool isInsideMap(LevelType_t type, Vector2 position);
 void freeMap(Map_t **ptrMap);
-uint32_t getWallTypeMap(uint32_t x, uint32_t y);
+uint32_t getWallTypeMap(LevelType_t type, uint32_t x, uint32_t y);
+Vector2 getLevelSize(LevelType_t type);
+Vector2 getLevelSizeEx(LevelType_t type);
 
 #ifdef __cplusplus
 }

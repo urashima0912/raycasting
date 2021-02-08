@@ -2,7 +2,7 @@
 #include <raymath.h>
 #include <stdlib.h>
 //------------------------------------------------------------------------------------
-// Private method declaration.
+// Private functions declaration.
 //------------------------------------------------------------------------------------
 static void     quicksort(int32_t *array, int32_t low, int32_t high);
 static int32_t  getMiddleIndex(int32_t *array, int32_t low, int32_t high);
@@ -10,7 +10,7 @@ static void     swap(int32_t *a, int32_t *b);
 
 
 //------------------------------------------------------------------------------------
-// Public method implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 void initGlobalConfig(void) {
     globalConfig.screeWidth = 640;
@@ -107,14 +107,6 @@ bool isLookLeft(const float angle) {
         return true;
     return false;
 }
-bool isPositionInsideMap(const Vector2 v) {
-    const int32_t vX = v.x;
-    const int32_t vY = v.y;
-    const int32_t canvasWidth = globalConfig.canvasWidth;
-    const int32_t canvasHeight = globalConfig.canvasHeight;
-
-    return vX >= 0 && vX < canvasWidth && vY >= 0 && vY < canvasHeight;
-}
 float getSmallLengthV(const Vector2 v1, const Vector2 v2) {
     const float lenV1 = lengthVectorGlobal(v1);
     const float lenV2 = lengthVectorGlobal(v2);
@@ -126,7 +118,7 @@ bool areEqualV(const Vector2 v1, const Vector2 v2) {
     return v1.x == v2.x && v1.y == v2.y;
 }
 //------------------------------------------------------------------------------------
-// Private method implementation.
+// Private functions implementation.
 //------------------------------------------------------------------------------------
 static void swap(int32_t *a, int32_t *b) {
     int32_t tmp = *a;

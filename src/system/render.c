@@ -26,12 +26,13 @@ static void drawRay(const Ray_t *const ray);
 static void drawWall(const Map_t *const map, const Ray_t *const ray, int32_t column);
 static void drawBackground(void);
 static void drawSprite(Sprite_t *const sprite);
-static void drawCeiling(const Player_t *const player);
 static void drawFPS(void);
 static void drawWallTile(const Tile_t *const tile);
 static void drawFloorTile(const Tile_t *const tile);
 static void drawCeilingTile(const Tile_t *const tile);
 static void drawPlayerInfo(void);
+static void drawCeiling(const Player_t *const player);
+static void drawFloor(void);
 
 //------------------------------------------------------------------------------------
 // Public functions declaration.
@@ -265,9 +266,6 @@ static void drawFPS(void) {
         DrawFPS(10, 10);
     }
 }
-static void drawCeiling(const Player_t *const player) {
-    //TODO
-}
 static void drawPlayerInfo(void) {
     if (!globalConfig.playerAngle || !globalConfig.playerPosition) {
         return;
@@ -293,4 +291,10 @@ static void drawPlayerInfo(void) {
         DrawText(textTilePosition, 10, space * 2 + diff, fontSize, color);
         DrawText(textAngle, 10, space * 3 + diff, fontSize, color);
     }
+}
+static void drawCeiling(const Player_t *const player) {
+    //TODO
+}
+static void drawFloor(void) {
+    //TODO
 }

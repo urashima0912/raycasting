@@ -35,34 +35,40 @@ typedef struct gConfig_t {
     Texture wallsTextures;
     Texture floorsTextures;
 
-    // player information
+    // player information.
     const Vector2 *playerPosition;
     const float *playerAngle;
+
+    // level information
+    uint32_t currentLevel;
+
 }gConfig_t;
 
 gConfig_t   globalConfig;
-float       *globalZBuffer;
 Camera2D    globalCamera;
+float       *globalZBuffer;
 
-void        initGlobalConfig(void);
-void        initGlobalZBuffer(void);
-void        freeGlobalZBuffer(void);
-void        freeGlobalResources(void);
-void        printVectorGlobal(Vector2 v);
-void        sortArrayGlobal(int32_t *array, int32_t size);
-float       lengthVectorGlobal(Vector2 v);
-float       getAngleGlobal(float angle, float value);
-float       getSmallLengthV(const Vector2 v1, const Vector2 v2);
-bool        isLookUp(const float angle);
-bool        isPositionInsideMap(const Vector2 v);
-bool        isLookLeft(const float angle);
-bool        areEqualV(const Vector2 v1, const Vector2 v2);
-bool        loadGlobalResources(void);
-Vector2     normalizedVectorGlobal(Vector2 v);
-Vector2     addVectorGlobal(Vector2 v1, Vector2 v2);
-Vector2     multVectorGlobal(Vector2 v, float value);
-Vector2     getSmallVector(const Vector2 v1, const Vector2 v2);
-Vector2     getUnitVectorToAngle(const float angle);
+void initGlobalConfig(void);
+void initGlobalZBuffer(void);
+void freeGlobalZBuffer(void);
+void freeGlobalResources(void);
+void printVectorGlobal(Vector2 v);
+void sortArrayGlobal(int32_t *array, int32_t size);
+
+float lengthVectorGlobal(Vector2 v);
+float getAngleGlobal(float angle, float value);
+float getSmallLengthV(const Vector2 v1, const Vector2 v2);
+
+bool isLookUp(const float angle);
+bool isLookLeft(const float angle);
+bool areEqualV(const Vector2 v1, const Vector2 v2);
+bool loadGlobalResources(void);
+
+Vector2 normalizedVectorGlobal(Vector2 v);
+Vector2 addVectorGlobal(Vector2 v1, Vector2 v2);
+Vector2 multVectorGlobal(Vector2 v, float value);
+Vector2 getSmallVector(const Vector2 v1, const Vector2 v2);
+Vector2 getUnitVectorToAngle(const float angle);
 
 #ifdef __cplusplus
 }

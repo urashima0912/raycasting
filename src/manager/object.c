@@ -4,7 +4,7 @@
 #include "shape.h"
 
 //------------------------------------------------------------------------------------
-// Public method implementation.
+// Public functions implementation.
 //------------------------------------------------------------------------------------
 void initStoreObject(void) {
     // Load map.
