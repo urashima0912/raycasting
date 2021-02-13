@@ -17,6 +17,8 @@ static void updateLineShapePhysic(Line_t *const line, Vector2 ptoA, Vector2 ptoB
 static void updateRaysPlayer(Player_t *const player);
 static void updateRay(Ray_t *const ray, const float angle, const int32_t column);
 static void updateSprite(Sprite_t *const sprite, const Player_t *const player);
+static void getWallType(Ray_t *const ray, int32_t tileWidth, int32_t tileHeight);
+
 static bool isCollisionVectorMapPhysic(Vector2 position);
 
 static Vector2 horizontalCollision(const Ray_t *const ray);
@@ -125,23 +127,26 @@ static void updateRay(Ray_t *const ray, const float angle, const int32_t column)
     }
     // fix eye-fish.
     ray->length = ray->length * cos(angle - ray->angle);
-
     // it store all rays distance.
     globalZBuffer[column] = ray->length;
-
     // get wall type.
+   getWallType(ray, tileWidth, tileHeight);
+}
+static void getWallType(Ray_t *const ray, int32_t tileWidth, int32_t tileHeight) {
     const Vector2 screenSize = getLevelSizeEx(globalConfig.currentLevel);
     const bool isLessCanvasWidth = ray->ptoB.x < screenSize.x;
     const bool isLessCanvasHeight = ray->ptoB.y < screenSize.y;
+    const float diff = 0.01;
     if (isLessCanvasWidth && isLessCanvasHeight) {
-        uint32_t x = (ray->ptoB.x + (isLookLeft(ray->angle) ? -0.01 : 0))/tileWidth;
-        uint32_t y = (ray->ptoB.y + (isLookUp(ray->angle) ? -0.01 : 0))/tileHeight;
+        uint32_t x = (ray->ptoB.x + (isLookLeft(ray->angle) ? -diff : 0))/tileWidth;
+        uint32_t y = (ray->ptoB.y + (isLookUp(ray->angle) ? -diff : 0))/tileHeight;
         LevelType_t levelType = globalConfig.currentLevel;
         ray->wallType = getWallTypeMap(levelType, x, y);
     } else {
         ray->wallType = WALL_EMPTY;
     }
 }
+
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
     const int32_t tileWidth = globalConfig.canvasTileWidth;
