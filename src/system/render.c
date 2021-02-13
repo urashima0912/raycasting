@@ -10,6 +10,7 @@
 
 #include <raylib.h>
 #include <raymath.h>
+#include <stdlib.h>
 
 static float distanceToPP = 0.0f;
 static int32_t screenMiddle = 0;
@@ -51,7 +52,7 @@ void initRender(void) {
     const int32_t canvasHeight = globalConfig.canvasHeight;
     const float angle = (globalConfig.FOV / 2) * DEG2RAD;
     distanceToPP = (canvasWidth / 2) / tanf(angle);
-    const float diff = fabsf(globalConfig.screeHeight - canvasHeight);
+    const float diff = abs(globalConfig.screeHeight - canvasHeight);
     screenMiddle = (canvasHeight - diff)/ 2;
 }
 void updateRender(void) {
