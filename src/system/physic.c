@@ -146,7 +146,6 @@ static void getWallType(Ray_t *const ray, int32_t tileWidth, int32_t tileHeight)
         ray->wallType = WALL_EMPTY;
     }
 }
-
 static Vector2 horizontalCollision(const Ray_t *const ray) {
     const float angle = ray->angle;
     const int32_t tileWidth = globalConfig.canvasTileWidth;
