@@ -48,6 +48,7 @@ const FloorType_t FLOORS_LEVEL_0[L0_ROW][L0_COLUMN] = {
 //------------------------------------------------------------------------------------
 static Tile_t **loadTiles(LevelType_t levelType, Vector2 size, TileType_t type);
 static void freeTiles(const Map_t *const map, Tile_t ***ptrTiles);
+static uint32_t getTileNumber(LevelType_t levelType, TileType_t type, int32_t x, int32_t y);
 
 //------------------------------------------------------------------------------------
 // Public functions implementation.
@@ -57,7 +58,7 @@ Map_t *initMap(LevelType_t type) {
     map->type = type;
     map->size = getLevelSize(type);
     map->walls = loadTiles(type, map->size, TILE_WALL);
-    map->floors = loadTiles(type, map->size, TILE_WALL);
+    map->floors = loadTiles(type, map->size, TILE_FLOOR);
 
     //TODO: change initSprite.
     map->sprites[0] = initSprite();
@@ -141,7 +142,7 @@ static Tile_t **loadTiles(LevelType_t levelType, Vector2 size, TileType_t type) 
         tiles[row] = malloc(sizeof(Tile_t) * size.x);
         for (int column=0; column < size.x; ++column) {
             const Vector2 tilePos = (Vector2){ column * tileWidth, row *tileHeight };
-            const uint32_t number =  getWallTypeMap(levelType, column, row);
+            const uint32_t number =  getTileNumber(levelType, type, column, row);
             tiles[row][column] = initTile(tilePos, tileSize, type, number);
         }
     }
@@ -155,5 +156,13 @@ static void freeTiles(const Map_t *const map, Tile_t ***ptrTiles) {
         }
         free((*ptrTiles));
         (*ptrTiles) = NULL;
+    }
+}
+static uint32_t getTileNumber(LevelType_t levelType, TileType_t type, int32_t x, int32_t y) {
+    switch (type) {
+        case TILE_FLOOR:
+            return getFloorTypeMap(levelType, x, y);
+        default:
+            return getWallTypeMap(levelType, x, y);
     }
 }

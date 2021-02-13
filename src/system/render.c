@@ -89,8 +89,11 @@ static void drawMap(const Map_t *const map) {
     const int nColumn = map->size.x;
     for (int row=0; row < nRow; ++row) {
         for (int column=0; column < nColumn; ++column) {
-            Tile_t tile = map->walls[row][column];
-            drawTile(&tile);
+            Tile_t floorTile = map->floors[row][column];
+            drawTile(&floorTile);
+            Tile_t wallTile = map->walls[row][column];
+            drawTile(&wallTile);
+
         }
     }
 }
@@ -127,7 +130,22 @@ static void drawWallTile(const Tile_t *const tile) {
     }
 }
 static void drawFloorTile(const Tile_t *const tile) {
-    //TODO
+    if (tile->number) {
+        const int32_t width = globalConfig.canvasTileWidth;
+        const int32_t height = globalConfig.canvasTileHeight;
+        Rectangle rec = (Rectangle){
+                (tile->number * width) - width,
+                0,
+                width,
+                height,
+        };
+        DrawTextureRec(
+                globalConfig.floorsTextures,
+                rec,
+                tile->position,
+                RAYWHITE
+        );
+    }
 }
 static void drawCeilingTile(const Tile_t *const tile) {
     //TODO
